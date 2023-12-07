@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: 1fr;
+  width: 100vw;
+  height: 100vh;
+}
+
+header, footer {
+  background-color: black;
+  color: aliceblue;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.left, .right {
+  background-color: darkolivegreen;
+}
+
+.click-area {
+  background-color: lightgreen;
+}
