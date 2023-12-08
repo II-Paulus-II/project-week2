@@ -2,12 +2,13 @@ console.log("Clyker game is werkn sur!");
 
 /* ------ User Input Buttons ------*/
 
-const hackingButton = document.getElementById("object-hacker");
+const hackingButton = document.getElementById("objectHacker");
 const upgradeGPUButton = document.getElementById("upgradeGPU");
 
-//Variables 
+/* ------ Variables ------*/
 //Damage Variables
-
+const basePlayerClickDamage = 1;
+const basePLayerBotNetSize = 1;
 let clickDamage = 1;
 let dps = 1;
 
@@ -17,18 +18,31 @@ let damageDone = 0; // Record Total Damage done [Probably call this hacking atte
 let numberObjectsHacked = 0;
 
 let objectHP = 10; // Set with function in later levels
-let maxObjectHP = 10; //Set with function in later levels
+let maxObjectHP = 5; //Set with function in later levels
 let currentLevel = 1;
 const objectsinLevel = 10 // I do not want this to change - 10 per level 
 let hackedinLevel = 0; // Starts at 0 then increases to 9 then resets to zero
 
-let sizeOfBotnet = 1; //Your own computer is part of the botnet network 
+let objectTypeArray = ["webserver", "crypto", "machine", "phishing"];
 
-/* ------ Upgrade Variables ------*/
+//Resources - Players Rig - Players Botnet - Players Money
+
+let sizeOfBotnet = basePLayerBotNetSize; //Your own computer is part of the botnet network 
+
+//Player rig data
+
+let currentGPU = "None";
+
+/* ------ Upgrade Objects ------*/
 
 //Click Damage upgrades - I will just do Nvidia GPU for now because can do so much with this
 //Sorry for underscores but looks better to me :)
-const GPUclickDamageUpgrades = {
+const GCardUpgrades = {
+  None: {
+    name: "iGPU",
+    price: 0,
+    damage: 0,
+  },
   GeForceGT_640: {
     name: "GeForce GT640",
     price: 1,
@@ -98,56 +112,155 @@ const GPUclickDamageUpgrades = {
 
 /* ------ Game Logic ------*/
 
+// Function to test Event Listeners when added
+
+function ibeenClicked() {
+  console.log("i been clicked");
+}
+
+//This function upgrades player GPU - Includes check that the GPU can be upgraded
+
+function upgradeGPU() {
+  //Get Array of GPU Names and number of GPU's available
+  let possibleGPU = Object.keys(GCardUpgrades);
+  let numAvailGPU = possibleGPU.length;
+
+  //Upgrade GPU if its possible
+  let currentGPUIndex = possibleGPU.indexOf(currentGPU);
+  if (currentGPUIndex < numAvailGPU-1) {
+    currentGPU = possibleGPU[currentGPUIndex + 1];
+  }
+
+  // Now recalculate Click Damage
+  setClickDamage();
+
+  /* --- Console Logging --- */
+//   console.log("number of available GPU: ", numAvailGPU);
+//   console.log("Array of GPUS", possibleGPU);
+//   console.log("current index of GPU", currentGPUIndex);
+//   console.log("current GPU is now: ", currentGPU);
+}
+
+// Function to Calculate Click Damage
+
+function setClickDamage() {
+  //Get GPU damage
+  //Get Individal GPU Objects as array
+  // very bad way to do it rip life
+  // let arrayGPU = Object.values(GCardUpgrades);
+  // let possibleGPU = Object.keys(GCardUpgrades);
+  // let currentGPUindex = possibleGPU.indexOf(currentGPU);
+  // let damageGPU = arrayGPU[currentGPUindex].damage;
+
+  //refactor
+  const gpuKey = currentGPU;
+  const gpuDamage = GCardUpgrades[gpuKey].damage;
+
+  //Calculate Total Click Damage
+
+  clickDamage = basePlayerClickDamage + gpuDamage;
+
+  /* --- Console Logging --- */
+  // console.log(arrayGPU);
+  // console.log("my current GPU is indexed at: ", currentGPUindex);
+  console.log("My gpu damage is: ", gpuDamage);
+  console.log("click damage is", clickDamage);
+}
+
+//Function to make Ortunado happy
+
+function setDPSDamage() {
+  //Gonna do more with this later
+  dps = sizeOfBotnet;
+  console.log("dps is", dps);
+}
+
 
 //This function provides a new object and/or new level when an objects hack is completed. 
-function getNewObject() {
+
+function getNextObject() {
+  //If website hacked have chance of adding to botnet
+  let newBotNetChance = Math.random();
+  console.log("my new bot net chance was: ", newBotNetChance)
+  if (newBotNetChance > 0.9 ) {
+    sizeOfBotnet++;
+    setDPSDamage();
+  }
   //Check if level complete
   if (hackedinLevel == objectsinLevel) {
     //incremement level
-    currentLevel ++;
-    //Log level to console.
-    console.log("Your level is: ", currentLevel);
+    currentLevel++;
     //reset level counter
     hackedinLevel = 0;
     //Calculate new max HP for website
-    maxObjectHP = 10*clickDamage + 3*dps; //May change this later
-    console.log("Max Object HP: ", maxObjectHP);
+    maxObjectHP = 2*clickDamage + 4*dps; //May change this later
   }
+
   objectHP = maxObjectHP;
+
+  /* --- Console Logging --- */
+  // console.log("Your level is: ", currentLevel);
+  // console.log("Max Object HP: ", maxObjectHP);
 }
 
 //This calculates the damage done to the object determined by current clickDamage or dps 
 //Called by either the dps listerner or the clickingDone function 
-function damageObject(calculatedDamage) {
-  //Click Damage iterator and console log
+
+function damageObject(eventParam) {
+
+  if (eventParam == "click") {
   //Record all damage done anyway
-  damageDone += calculatedDamage;
-  console.log("Damage Done is now",damageDone);
+  damageDone += clickDamage;
 
   //Do damage to current object
-  objectHP -= calculatedDamage;
+  objectHP -= clickDamage;
+  }
+  else if (eventParam == "dps") {
+    damageDone += dps;
+    objectHP -= dps;
+  }
 
-  //check if object killed or hacked
+  //check if object killed [i mean hacked]
   if (objectHP <= 0) {
-    //Increase Total objects hacked and increase number of objects hacked in level 
+    //Increase objects hacked
     numberObjectsHacked += 1;
     hackedinLevel += 1;
 
-    //Console log increase in number of objects hacked
-    console.log("Number of objects Hacked is: ", numberObjectsHacked);
-    getNewObject();
+    getNextObject();
   }
+
+  render();
+  /* --- Console Logging --- */
+  // console.log("calculated damage", clickDamage);
+  // console.log("Damage Done is now", damageDone);
+  console.log("Number of objects Hacked is: ", numberObjectsHacked);
 }
 
-/*Dont need this anymore
-function clickingDone (event) {
-  //Test log of function 
-  console.log("i have been hacked by the clicker");
+/* ----- HTML Data IDS ----- */
 
-  //Send click damage to damageWebsite function
-  damageWebsite(clickDamage);
-}*/
+const dpsCounter = document.getElementById("dpsCounter");
+const clickDamageCounter = document.getElementById("clickDamageCounter");
+const objectHPContainer = document.getElementById("objectHP");
+const levelContainer = document.getElementById("currentLevel");
+const currentGPUContainer = document.getElementById("currentGPU");
 
-//Do dps and click damage to websites. 
-setInterval(damageObject.bind(null, dps), 1000);
-hackingButton.addEventListener("click", damageObject.bind(null, clickDamage));
+/* ------ RENDER ------*/
+
+function render() {
+  dpsCounter.textContent = dps;
+  clickDamageCounter.textContent = clickDamage;
+  objectHPContainer.textContent = `${objectHP} / ${maxObjectHP}`;
+  levelContainer.textContent = currentLevel;
+
+  const gpuKey = currentGPU;
+  const gpuName = GCardUpgrades[gpuKey].name;
+  currentGPUContainer.textContent = gpuName;
+}
+/* ------ Event Listeners & SetInterval ------*/
+
+upgradeGPUButton.addEventListener("click", upgradeGPU);
+
+//Damage 
+
+setInterval(damageObject.bind(null, "dps"), 1000);
+hackingButton.addEventListener("click", damageObject.bind(null, "click"));

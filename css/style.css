@@ -9,6 +9,7 @@ button {
 
 body {
   display: grid;
+  color: aliceblue;
   grid-template-rows: 2fr 17fr 1fr;
   grid-template-columns: 1fr;
   background-color: black;
@@ -17,8 +18,6 @@ body {
 }
 
 header, footer {
-  
-  color: aliceblue;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -56,7 +55,7 @@ main {
   height: 100%
 }
 
-#object-hacker {
+#objectHacker {
   width: 70%;
   height: 50%;
   min-width: 120px;
@@ -67,20 +66,30 @@ main {
   background-size: 100% 100%;
 }
 
-#object-hp-title {
+#objectHPTitle {
   text-align: center;
   display: inline-block;
-  color: azure;
   text-shadow: 2px 2px black;
   font-size: 2rem;
   font-weight: bold;
 }
 
-#object-hp {
+#objectHP {
   text-align: center;
   display: inline-block;
-  color: azure;
   text-shadow: 2px 2px black;
   font-size: 2rem;
   font-weight: bold;
+}
+
+.rigBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.damageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

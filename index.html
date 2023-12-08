@@ -17,19 +17,26 @@
     <section class="click-area" id="click-area-id">
       <!-- New grid with three boxes on top for information -->
       <div class="box"></div>
+      <div class="box levelBox"> 
+        <p>Current Level: <span id="currentLevel">1</span> </p>
+      </div>
+      <div class="box damageBox">
+        <div>Botnet Dps: <span id="dpsCounter">1</span></div>
+        <div>Click Damage: <span id="clickDamageCounter">1</span></div>
+      </div>
+      <div class="box"></div>
+      <div class="box"><p id="objectHPTitle">object HP:</p></div>
       <div class="box"></div>
       <div class="box"></div>
+      <div class="box"><p id="objectHP">10 / 10</p></div>
       <div class="box"></div>
-      <div class="box"><p id="object-hp-title">object HP:</p></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"><p id="object-hp">10 / 10</p></div>
-      <div class="box"></div>
-      <div class="box">
+      <div class="box rigBox">
+        <div>Current GPU: </div>
+        <div><span id="currentGPU">iGPU</span></div>
         <button id="upgradeGPU">Upgrade GPU</button>
       </div>
       <div class="box">
-        <button id="object-hacker"></button>
+        <button id="objectHacker"></button>
       </div>
       <div class="box"></div>
       <div class="box"></div>
