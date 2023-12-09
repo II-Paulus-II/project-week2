@@ -1,10 +1,5 @@
 console.log("Clyker game is werkn sur!");
 
-/* ------ User Input Buttons ------*/
-
-const hackingButton = document.getElementById("objectHacker");
-const upgradeGPUButton = document.getElementById("upgradeGPU");
-
 /* ------ Variables ------*/
 //Damage Variables
 const basePlayerClickDamage = 1;
@@ -28,6 +23,7 @@ let objectTypeArray = ["webserver", "crypto", "machine", "phishing"];
 //Resources - Players Rig - Players Botnet - Players Money
 
 let sizeOfBotnet = basePLayerBotNetSize; //Your own computer is part of the botnet network 
+let sizeWallet = 0;
 
 //Player rig data
 
@@ -45,62 +41,62 @@ const GCardUpgrades = {
   },
   GeForceGT_640: {
     name: "GeForce GT640",
-    price: 1,
+    price: 100,
     damage: 1,
   },
   GeForceGTX_460: {
     name: "GeForce GTX460",
-    price: 1,
+    price: 225,
     damage: 2,
   },
   GeForceGTX_660Ti: {
     name: "GeForce GTX660Ti",
-    price: 1,
+    price: 425,
     damage: 4,
   },
   GeForceGTX_960: {
     name: "GeForce GTX960",
-    price: 1,
+    price: 700,
     damage: 6,
   },
   GeForceGTX_1650SUPER: {
     name: "GeForce GTX1650 Super",
-    price: 1,
+    price: 900,
     damage: 10,
   },
   GeForceGTX_1070Ti: {
     name: "GeForce GTX1070Ti",
-    price: 1,
+    price: 1250,
     damage: 14,
   },
   GeForceRTX_2080: {
     name: "GeForce RTX2080",
-    price: 1,
+    price: 1380,
     damage: 18,
   },
   GeForceRTX_3070: {
     name: "GeForce RTX3070",
-    price: 1,
+    price: 1600,
     damage: 22,
   },
   GeForceRTX_3080: {
     name: "GeForce RTX3080",
-    price: 1,
+    price: 1850,
     damage: 26,
   },
   GeForceRTX_3090Ti: {
     name: "GeForce RTX3090Ti",
-    price: 1,
+    price: 2100,
     damage: 30,
   },
   GeForceRTX_4080: {
     name: "GeForce RTX4080",
-    price: 1,
+    price: 2300,
     damage: 35,
   },
   GeForceRTX_4090: {
     name: "GeForce RTX4090",
-    price: 1,
+    price: 2500,
     damage: 40,
   },
 }
@@ -118,21 +114,52 @@ function ibeenClicked() {
   console.log("i been clicked");
 }
 
+//This function checks if current GPU can be upgraded
+
+function canUpgradeGPU() {
+
+  const possibleGPU = Object.keys(GCardUpgrades);
+  const numAvailGPU = possibleGPU.length;
+  let testOne = false;
+  let testTwo = false;
+
+  //First Check if current GPU is not the last member of the list?
+  const currentGPUIndex = possibleGPU.indexOf(currentGPU);
+  if (currentGPUIndex < numAvailGPU-1) {
+    testOne = true;
+  }
+  //Second check - Can you afford it?
+  const nextGPUPrice = GCardUpgrades[possibleGPU[currentGPUIndex+1]].price;
+  if ( nextGPUPrice <= sizeWallet ) {
+    testTwo = true;
+  }
+
+  if (testOne && testTwo) {
+    return true;
+  }
+  else {
+    return false;
+  }
+
+}
+
 //This function upgrades player GPU - Includes check that the GPU can be upgraded
 
 function upgradeGPU() {
-  //Get Array of GPU Names and number of GPU's available
-  let possibleGPU = Object.keys(GCardUpgrades);
-  let numAvailGPU = possibleGPU.length;
 
-  //Upgrade GPU if its possible
-  let currentGPUIndex = possibleGPU.indexOf(currentGPU);
-  if (currentGPUIndex < numAvailGPU-1) {
+  let canUpgradeGPUCheck = canUpgradeGPU();
+  //Get Array of GPU Names and number of GPU's available
+  const possibleGPU = Object.keys(GCardUpgrades);
+  const currentGPUIndex = possibleGPU.indexOf(currentGPU);
+
+  //If can upgrade then do it and pay price
+  if (canUpgradeGPUCheck) {
+    sizeWallet -= GCardUpgrades[possibleGPU[currentGPUIndex+1]].price
     currentGPU = possibleGPU[currentGPUIndex + 1];
   }
-
-  // Now recalculate Click Damage
+  // Now recalculate Click Damage and render
   setClickDamage();
+  render();
 
   /* --- Console Logging --- */
 //   console.log("number of available GPU: ", numAvailGPU);
@@ -167,12 +194,14 @@ function setClickDamage() {
   console.log("click damage is", clickDamage);
 }
 
-//Function to make Ortunado happy
+//Function to calculate DPS Damage
 
 function setDPSDamage() {
   //Gonna do more with this later
   dps = sizeOfBotnet;
-  console.log("dps is", dps);
+
+  /* --- Console Logging --- */
+  // console.log("dps is", dps);
 }
 
 
@@ -182,9 +211,14 @@ function getNextObject() {
   //If website hacked have chance of adding to botnet
   let newBotNetChance = Math.random();
   console.log("my new bot net chance was: ", newBotNetChance)
-  if (newBotNetChance > 0.9 ) {
+  if (newBotNetChance > 0.85 ) {
     sizeOfBotnet++;
     setDPSDamage();
+  }
+  //If website hacked have chance of getting money
+  let chanceOfMoney = Math.random();
+  if (chanceOfMoney < 0.15) {
+    sizeWallet+=(maxObjectHP*3); //May change this amount. 
   }
   //Check if level complete
   if (hackedinLevel == objectsinLevel) {
@@ -233,7 +267,7 @@ function damageObject(eventParam) {
   /* --- Console Logging --- */
   // console.log("calculated damage", clickDamage);
   // console.log("Damage Done is now", damageDone);
-  console.log("Number of objects Hacked is: ", numberObjectsHacked);
+  // console.log("Number of objects Hacked is: ", numberObjectsHacked);
 }
 
 /* ----- HTML Data IDS ----- */
@@ -241,21 +275,47 @@ function damageObject(eventParam) {
 const dpsCounter = document.getElementById("dpsCounter");
 const clickDamageCounter = document.getElementById("clickDamageCounter");
 const objectHPContainer = document.getElementById("objectHP");
+const hackingAttempts = document.getElementById("hackingAttempts");
 const levelContainer = document.getElementById("currentLevel");
+const sizeWalletContainer = document.getElementById("sizeWallet");
+const sizeBotnetContainer = document.getElementById("sizeBotnet");
 const currentGPUContainer = document.getElementById("currentGPU");
+
+
+/* ------ User Input Buttons ------*/
+
+const hackingButton = document.getElementById("objectHacker");
+const upgradeGPUButton = document.getElementById("upgradeGPU");
 
 /* ------ RENDER ------*/
 
 function render() {
+
+  //Basic data entry in the page
   dpsCounter.textContent = dps;
   clickDamageCounter.textContent = clickDamage;
   objectHPContainer.textContent = `${objectHP} / ${maxObjectHP}`;
+  hackingAttempts.textContent = numberObjectsHacked;
   levelContainer.textContent = currentLevel;
+  sizeBotnetContainer.textContent = sizeOfBotnet;
+  sizeWalletContainer.textContent = sizeWallet;
 
+  //GPU
   const gpuKey = currentGPU;
   const gpuName = GCardUpgrades[gpuKey].name;
   currentGPUContainer.textContent = gpuName;
+  let buyNewGPU = canUpgradeGPU();
+  if (buyNewGPU) {
+    upgradeGPUButton.style.opacity = 1;
+  }
+  else {
+    upgradeGPUButton.style.opacity = 0;
+  }
 }
+
+// Run it once to make sure - especially since you will need to run it if reloading data from storage
+render();
+
 /* ------ Event Listeners & SetInterval ------*/
 
 upgradeGPUButton.addEventListener("click", upgradeGPU);
