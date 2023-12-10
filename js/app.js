@@ -23,19 +23,19 @@ let objectTypeArray = ["webserver", "crypto", "machine", "phishing"];
 //Resources - Players Rig - Players Botnet - Players Money
 
 let sizeOfBotnet = basePLayerBotNetSize; //Your own computer is part of the botnet network 
-let sizeWallet = 100000;
+let sizeWallet = 26060;
 
 //Player rig data
 
 let currentGPU = { value: "None" };
-let currentCPU = 0;
+let currentCPU = { value: "PentiumThree"};
 let currentRAM = 0;
 let currentHD = 0;
 
 /* ------ Upgrade Objects ------*/
 
-//Click Damage upgrades - I will just do Nvidia GPU for now because can do so much with this
-//Sorry for underscores but looks better to me :)
+//Click Damage upgrades
+//Sorry for underscores for GPUs but looks better to me :)
 const GCardUpgrades = {
   None: { //Integreated Graphics doesn't count for damage
     name: "iGPU",
@@ -104,9 +104,49 @@ const GCardUpgrades = {
   },
 }
 
-//DPS damage upgrades -- Will make this a %increase in damage done by your botnet - botnet increases passively
+const cpuUpgrades = {
+  PentiumThree: {
+    name: "Pentium 3",
+    price: 0,
+    damage: 0,
+  },
+  PentiumFour: {
+    name: "Pentium 4",
+    price: 50,
+    damage: 1,
+  },
+  Test: {
+    name:"Test",
+    price: 3000,
+    damage: 2,
+  },
+}
 
+//Gang upgrades -- Will make this a %increase in damage done by your botnet - botnet increases passively
 
+const botnetAdmin = {
+  name: "Botnet Admin",
+  price: 1000,
+  efficiency: 10,
+}
+
+const scripter = {
+  name: "Scripter",
+  price: 1000,
+  damage: 25,
+}
+
+const researcher = {
+  name: "Researcher",
+  price: 600,
+  damage: 15
+}
+
+const mule = {
+  name: "Mule",
+  price: 1000,
+  money: 1,
+}
 
 
 /* ------ Game Logic ------*/
@@ -117,48 +157,48 @@ function ibeenClicked() {
   console.log("i been clicked");
 }
 
+//Function to quickly get an item name 
+function itemName(playerItem, upgradeObject) {
+  const itemKey = playerItem.value;
+  const itemName = upgradeObject[itemKey].name;
+  return itemName;
+}
+
 //This function checks if a current item can be upgraded - passes by reference
+//Seperated because used by the rendering function
 
 function canUpgradeItem(playerItem, UpgradeObject) {
 
   const possibleItem = Object.keys(UpgradeObject);
   const numAvailItems = possibleItem.length;
-  let testOne = false;
-  let testTwo = false;
+  let canUpgrade = false;
 
-  //First Check if current GPU is not the last member of the list?
+  //First Check if current object is not the last member of the list?
   const currentItemIndex = possibleItem.indexOf(playerItem.value);
   
   if (currentItemIndex < numAvailItems-1) {
-    testOne = true;
     const nextItemPrice = UpgradeObject[possibleItem[currentItemIndex+1]].price;
     //Second check inside first to prevent checking price for non existent next item. 
     if ( nextItemPrice <= sizeWallet ) {
-      testTwo = true;
+      canUpgrade = true;
     }
   }
 
-  if (testOne && testTwo) {
-    return true;
-  }
-  else {
-    return false;
-  }
-
+  return canUpgrade;
 }
 
 //This function upgrades player GPU - Includes check that the GPU can be upgraded
 
-function upgradeItem(playerItem, UpgradeObject) {
+function upgradeItem(playerItem, upgradeObject) {
 
-  let canUpgradeItemCheck = canUpgradeItem(playerItem, UpgradeObject);
-  //Get Array of GPU Names and number of GPU's available
-  const possibleItem = Object.keys(UpgradeObject);
+  let canUpgradeItemCheck = canUpgradeItem(playerItem, upgradeObject);
+  //Get Array of object Names and number of Objects's available
+  const possibleItem = Object.keys(upgradeObject);
   const currentItemIndex = possibleItem.indexOf(playerItem.value);
 
   //If can upgrade then do it and pay price
   if (canUpgradeItemCheck) {
-    sizeWallet -= UpgradeObject[possibleItem[currentItemIndex+1]].price
+    sizeWallet -= upgradeObject[possibleItem[currentItemIndex+1]].price
     playerItem.value = possibleItem[currentItemIndex + 1];
   }
   // Now recalculate Click Damage and render
@@ -186,16 +226,19 @@ function setClickDamage() {
   //refactor
   const gpuKey = currentGPU.value;
   const gpuDamage = GCardUpgrades[gpuKey].damage;
+  const cpuKey = currentCPU.value;
+  const cpuDamage = cpuUpgrades[cpuKey].damage;
 
   //Calculate Total Click Damage
 
-  clickDamage = basePlayerClickDamage + gpuDamage;
+  clickDamage = basePlayerClickDamage + gpuDamage + cpuDamage;
 
   /* --- Console Logging --- */
   // console.log(arrayGPU);
   // console.log("my current GPU is indexed at: ", currentGPUindex);
-  console.log("My gpu damage is: ", gpuDamage);
-  console.log("click damage is", clickDamage);
+  // console.log("My gpu damage is: ", gpuDamage);
+  // console.log("My cpu damage is: ", cpuDamage);
+  // console.log("click damage is: ", clickDamage);
 }
 
 //Function to calculate DPS Damage
@@ -285,6 +328,7 @@ const hackingAttempts = document.getElementById("hackingAttempts");
 const levelContainer = document.getElementById("currentLevel");
 const sizeWalletContainer = document.getElementById("sizeWallet");
 const sizeBotnetContainer = document.getElementById("sizeBotnet");
+const currentCPUContainer = document.getElementById("currentCPU");
 const currentGPUContainer = document.getElementById("currentGPU");
 
 
@@ -292,11 +336,21 @@ const currentGPUContainer = document.getElementById("currentGPU");
 
 const hackingButton = document.getElementById("objectHacker");
 const upgradeGPUButton = document.getElementById("upgradeGPU");
+const upgradeCPUButton = document.getElementById("upgradeCPU");
 
 /* ------ RENDER ------*/
 
-function render() {
+function canRenderUpgrade(playerItem, upgradeObject) {
+  let buyNewItem = canUpgradeItem(playerItem, upgradeObject);
+  if (buyNewItem) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
 
+function render() {
   //Basic data entry in the page
   dpsCounter.textContent = dps;
   clickDamageCounter.textContent = clickDamage;
@@ -307,16 +361,14 @@ function render() {
   sizeWalletContainer.textContent = sizeWallet;
 
   //GPU
-  const gpuKey = currentGPU.value;
-  const gpuName = GCardUpgrades[gpuKey].name;
-  currentGPUContainer.textContent = gpuName;
-  let buyNewGPU = canUpgradeItem(currentGPU, GCardUpgrades);
-  if (buyNewGPU) {
-    upgradeGPUButton.style.opacity = 1;
-  }
-  else {
-    upgradeGPUButton.style.opacity = 0;
-  }
+  currentGPUContainer.textContent = itemName(currentGPU, GCardUpgrades);
+  upgradeGPUButton.style.opacity = canRenderUpgrade(currentGPU, GCardUpgrades);
+
+  //CPU
+  currentCPUContainer.textContent = itemName(currentCPU, cpuUpgrades);
+  upgradeCPUButton.style.opacity = canRenderUpgrade(currentCPU, cpuUpgrades);
+
+
 }
 
 // Run it once to make sure - especially since you will need to run it if reloading data from storage
@@ -329,8 +381,11 @@ render();
 upgradeGPUButton.addEventListener("click", function () {
   upgradeItem(currentGPU, GCardUpgrades);
 });
+upgradeCPUButton.addEventListener("click", function () {
+  upgradeItem(currentCPU, cpuUpgrades);
+});
 
-//Damage 
+//Damage -- could do this the above way as well. 
 
 setInterval(damageObject.bind(null, "dps"), 1000);
 hackingButton.addEventListener("click", damageObject.bind(null, "click"));
