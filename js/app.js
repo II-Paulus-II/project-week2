@@ -19,7 +19,7 @@ let maxObjectHP = 5; //Set with function in later levels
 let clickDamage, dps;
 
 //Game variables saved & reloaded
-let damageDone, numberObjectsHacked, sizeWallet, currentLevel, sizeOfBotnet;
+let damageDone, numberObjectsHacked, sizeWallet, currentLevel, sizeOfBotnet, botnetEfficiency;
 
 //Player's rig, gang, initialise the rig as objects to prevent errors
 
@@ -148,7 +148,7 @@ const ramUpgrades = {
   },
 }
 
-//Gang upgrades -- Will make this a %increase in damage done by your botnet - botnet increases passively
+//Gang upgrades -- Will make effiency affect botnet base damage and gang-member damage is flat
 
 const botnetAdmin = {
   name: "Admins",
@@ -172,7 +172,7 @@ const researcher = {
 const mule = {
   name: "Mules",
   price: 1000,
-  money: 1,
+  money: 5,
 }
 
 /* ----- Save Game Function ----- */
@@ -295,7 +295,11 @@ function hireGangMember(gangMember) {
     }
     sizeWallet -= gangMember.price
   }
+  //Recalculate DPS
+  setDPSDamage();
 }
+
+/* ----- Damage Functions ----- */
 
 // Function to Calculate Click Damage
 
@@ -324,12 +328,30 @@ function setClickDamage() {
   // console.log("click damage is: ", clickDamage);
 }
 
+// Function to calculate Botnet Efficiency and i love my brackets
+
+function getBotNetEfficiency() {
+  baseEfficiency = 0.2;
+  return (numAdmins * ((botnetAdmin.efficiency)/100)) + (numScripters*(scripter.efficiency/100)) + baseEfficiency;
+}
+
+function getGangDamage() {
+  let researcherDamage = numResearchers * researcher.damage;
+  let scripterDamage = numScripters * scripter.damage;
+  return researcherDamage + scripterDamage;
+}
 //Function to calculate DPS Damage
 
 function setDPSDamage() {
-  //Gonna do more with this later
-  dps = sizeOfBotnet;
-
+  botnetEfficiency = getBotNetEfficiency();
+  let damageIncrease = getGangDamage();
+  if (sizeOfBotnet <= 5) {
+    dps = sizeOfBotnet + damageIncrease;
+  }
+  else {
+    dps = 5 + ((sizeOfBotnet - 5) * botnetEfficiency) + damageIncrease;
+  }
+  
   /* --- Console Logging --- */
   // console.log("dps is", dps);
 }
@@ -350,7 +372,7 @@ function getNextObject() {
   //Mules increase this amount
   let chanceOfMoney = Math.random();
   if (chanceOfMoney < 0.15) {
-    sizeWallet+=(maxObjectHP*3); //May change this amount. 
+    sizeWallet+=(maxObjectHP*(3+(numMules*mule.money))); //May change this amount. 
   }
   //Check if level complete
   if (hackedinLevel == objectsinLevel) {
@@ -414,6 +436,7 @@ const hackingAttempts = document.getElementById("hackingAttempts");
 const levelContainer = document.getElementById("currentLevel");
 const sizeWalletContainer = document.getElementById("sizeWallet");
 const sizeBotnetContainer = document.getElementById("sizeBotnet");
+const efficiencyBotnetContainer = document.getElementById("efficiencyBotnet");
 const currentCPUContainer = document.getElementById("currentCPU");
 const currentRAMContainer = document.getElementById("currentRAM");
 const currentGPUContainer = document.getElementById("currentGPU");
@@ -462,13 +485,14 @@ function canRenderHire(gangMember) {
 
 function render() {
   //Basic data entry in the page
-  dpsCounter.textContent = dps;
-  clickDamageCounter.textContent = clickDamage;
-  objectHPContainer.textContent = `${objectHP} / ${maxObjectHP}`;
+  dpsCounter.textContent = parseFloat(dps).toFixed(0);
+  clickDamageCounter.textContent = parseFloat(clickDamage).toFixed(0);
+  objectHPContainer.textContent = `${parseFloat(objectHP).toFixed(0)} / ${parseFloat(maxObjectHP).toFixed(0)}`;
   hackingAttempts.textContent = numberObjectsHacked;
   levelContainer.textContent = currentLevel;
   sizeBotnetContainer.textContent = sizeOfBotnet;
-  sizeWalletContainer.textContent = sizeWallet;
+  sizeWalletContainer.textContent = parseFloat(sizeWallet).toFixed(2);
+  efficiencyBotnetContainer.textContent = parseFloat(botnetEfficiency).toFixed(0);
 
   //Rig
   //CPU
@@ -533,7 +557,7 @@ function beginGame() {
   else {
     damageDone = 0;
     numberObjectsHacked = 0;
-    sizeWallet = startingWallet+10000;
+    sizeWallet = startingWallet;
     currentLevel = 1;
     sizeOfBotnet = basePLayerBotNetSize;
     //Rig
@@ -550,6 +574,10 @@ function beginGame() {
 
   setClickDamage();
   setDPSDamage();
+  if (currentLevel >= 2) {
+    maxObjectHP = 2*clickDamage + 4*dps;
+    objectHP = maxObjectHP;
+  }
   render();
   /* --- Console Logging --- */
   // console.log("gamesave rig ", gameSave.rig);

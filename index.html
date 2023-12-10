@@ -9,68 +9,70 @@
 </head>
 <body>
   <header>
-    <h1>Clyke this stuff if you want!</h1>
-    <h2>Click on your monitor to begin!</h2>
+    <h1>Hacker Clicker</h1>
+    <button id="newGame" class="myHoverButton">New Game</button>
   </header>
   <main>
     <section class="left"></section>
     <section class="click-area" id="click-area-id">
       <!-- New grid with three boxes on top for information -->
-      <div class="box">
-        <button id="newGame">New Game</button>
+      <div class="box topBox">
+        <p>Pts: <span id="hackingAttempts">0</span></p>
       </div>
-      <div class="box levelBox"> 
-        <p>Hacking Attempts: <span id="hackingAttempts">0</span></p>
-        <p>Current Level: <span id="currentLevel">1</span> </p>
+      <div class="box topBox"> 
+        <p>Level: <span id="currentLevel">1</span> </p>
       </div>
-      <div class="box damageBox">
+      <div class="box topBox">
+        <div>&#163;<span id="sizeWallet">0</span></div>
+      </div>
+      <div class="box detailsBox">
         <div>Botnet Dps: <span id="dpsCounter">1</span></div>
         <div>Click Damage: <span id="clickDamageCounter">1</span></div>
       </div>
-      <div class="box"></div>
       <div class="box"><p id="objectHPTitle">object HP:</p></div>
-      <div class="box botnetBox">
+      <div class="box detailsBox">
         <div>Size of Botnet: <span id="sizeBotnet">1</span></div>
-        <div>Wallet: &#163;<span id="sizeWallet">0</span></div>
+        <div>Botnet Efficiency: <span id="efficiencyBotnet">1</span></div>
       </div>
       <div class="box"></div>
       <div class="box"><p id="objectHP">10 / 10</p></div>
       <div class="box"></div>
       <div class="box rigBox">
-        <div>Rig:</div>
+        <div class="rigandgangTitle">Rig:</div>
         <div>Current CPU: </div>
         <div><span id="currentCPU"></span></div>
-        <button id="upgradeCPU">Upgrade</button>
+        <button id="upgradeCPU" class="myHoverButton">Upgrade</button>
         <div>Current RAM: </div>
         <div><span id="currentRAM"></span></div>
-        <button id="upgradeRAM">Upgrade</button>
+        <button id="upgradeRAM" class="myHoverButton">Upgrade</button>
         <div>Current GPU: </div>
         <div><span id="currentGPU"></span></div>
-        <button id="upgradeGPU">Upgrade</button>
+        <button id="upgradeGPU" class="myHoverButton">Upgrade</button>
         <div>Current HD: </div>
         <div><span id="currentHD"></span></div>
-        <button id="upgradeHD">Upgrade</button>
+        <button id="upgradeHD" class="myHoverButton">Upgrade</button>
       </div>
       <div class="box">
         <button id="objectHacker"></button>
       </div>
       <div class="box gangBox">
-        <div>Gang:</div>
+        <div class="rigandgangTitle">Gang:</div>
         <div>Admins: </div>
         <div><span id="numAdmins"></span></div>
-        <button id="hireAdmin">Hire</button>
+        <button id="hireAdmin" class="myHoverButton">Hire</button>
         <div>Scripters: </div>
         <div><span id="numScripters"></span></div>
-        <button id="hireScripter">Hire</button>
+        <button id="hireScripter" class="myHoverButton">Hire</button>
         <div>Researchers: </div>
         <div><span id="numResearchers"></span></div>
-        <button id="hireResearcher">Hire</button>
+        <button id="hireResearcher" class="myHoverButton">Hire</button>
         <div>Money Mules: </div>
         <div><span id="numMules"></span></div>
-        <button id="hireMule">Hire</button>
+        <button id="hireMule" class="myHoverButton">Hire</button>
       </div>
       <div class="box"></div>
-      <div class="box"></div>
+      <div class="box">
+      </div>
       <div class="box"></div>
       <!--  -->
     </section>
