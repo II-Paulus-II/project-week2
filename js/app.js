@@ -12,7 +12,7 @@ let dps = 1;
 let damageDone = 0; // Record Total Damage done [Probably call this hacking attempts to user]
 let numberObjectsHacked = 0;
 
-let objectHP = 10; // Set with function in later levels
+let objectHP = 5; // Set with function in later levels
 let maxObjectHP = 5; //Set with function in later levels
 let currentLevel = 1;
 const objectsinLevel = 10 // I do not want this to change - 10 per level 
@@ -23,18 +23,21 @@ let objectTypeArray = ["webserver", "crypto", "machine", "phishing"];
 //Resources - Players Rig - Players Botnet - Players Money
 
 let sizeOfBotnet = basePLayerBotNetSize; //Your own computer is part of the botnet network 
-let sizeWallet = 0;
+let sizeWallet = 100000;
 
 //Player rig data
 
-let currentGPU = "None";
+let currentGPU = { value: "None" };
+let currentCPU = 0;
+let currentRAM = 0;
+let currentHD = 0;
 
 /* ------ Upgrade Objects ------*/
 
 //Click Damage upgrades - I will just do Nvidia GPU for now because can do so much with this
 //Sorry for underscores but looks better to me :)
 const GCardUpgrades = {
-  None: {
+  None: { //Integreated Graphics doesn't count for damage
     name: "iGPU",
     price: 0,
     damage: 0,
@@ -114,24 +117,25 @@ function ibeenClicked() {
   console.log("i been clicked");
 }
 
-//This function checks if current GPU can be upgraded
+//This function checks if a current item can be upgraded - passes by reference
 
-function canUpgradeGPU() {
+function canUpgradeItem(playerItem, UpgradeObject) {
 
-  const possibleGPU = Object.keys(GCardUpgrades);
-  const numAvailGPU = possibleGPU.length;
+  const possibleItem = Object.keys(UpgradeObject);
+  const numAvailItems = possibleItem.length;
   let testOne = false;
   let testTwo = false;
 
   //First Check if current GPU is not the last member of the list?
-  const currentGPUIndex = possibleGPU.indexOf(currentGPU);
-  if (currentGPUIndex < numAvailGPU-1) {
+  const currentItemIndex = possibleItem.indexOf(playerItem.value);
+  
+  if (currentItemIndex < numAvailItems-1) {
     testOne = true;
-  }
-  //Second check - Can you afford it?
-  const nextGPUPrice = GCardUpgrades[possibleGPU[currentGPUIndex+1]].price;
-  if ( nextGPUPrice <= sizeWallet ) {
-    testTwo = true;
+    const nextItemPrice = UpgradeObject[possibleItem[currentItemIndex+1]].price;
+    //Second check inside first to prevent checking price for non existent next item. 
+    if ( nextItemPrice <= sizeWallet ) {
+      testTwo = true;
+    }
   }
 
   if (testOne && testTwo) {
@@ -145,17 +149,17 @@ function canUpgradeGPU() {
 
 //This function upgrades player GPU - Includes check that the GPU can be upgraded
 
-function upgradeGPU() {
+function upgradeItem(playerItem, UpgradeObject) {
 
-  let canUpgradeGPUCheck = canUpgradeGPU();
+  let canUpgradeItemCheck = canUpgradeItem(playerItem, UpgradeObject);
   //Get Array of GPU Names and number of GPU's available
-  const possibleGPU = Object.keys(GCardUpgrades);
-  const currentGPUIndex = possibleGPU.indexOf(currentGPU);
+  const possibleItem = Object.keys(UpgradeObject);
+  const currentItemIndex = possibleItem.indexOf(playerItem.value);
 
   //If can upgrade then do it and pay price
-  if (canUpgradeGPUCheck) {
-    sizeWallet -= GCardUpgrades[possibleGPU[currentGPUIndex+1]].price
-    currentGPU = possibleGPU[currentGPUIndex + 1];
+  if (canUpgradeItemCheck) {
+    sizeWallet -= UpgradeObject[possibleItem[currentItemIndex+1]].price
+    playerItem.value = possibleItem[currentItemIndex + 1];
   }
   // Now recalculate Click Damage and render
   setClickDamage();
@@ -180,7 +184,7 @@ function setClickDamage() {
   // let damageGPU = arrayGPU[currentGPUindex].damage;
 
   //refactor
-  const gpuKey = currentGPU;
+  const gpuKey = currentGPU.value;
   const gpuDamage = GCardUpgrades[gpuKey].damage;
 
   //Calculate Total Click Damage
@@ -206,11 +210,12 @@ function setDPSDamage() {
 
 
 //This function provides a new object and/or new level when an objects hack is completed. 
+//If make a boss do it here. 
 
 function getNextObject() {
   //If website hacked have chance of adding to botnet
   let newBotNetChance = Math.random();
-  console.log("my new bot net chance was: ", newBotNetChance)
+
   if (newBotNetChance > 0.85 ) {
     sizeOfBotnet++;
     setDPSDamage();
@@ -235,6 +240,7 @@ function getNextObject() {
   /* --- Console Logging --- */
   // console.log("Your level is: ", currentLevel);
   // console.log("Max Object HP: ", maxObjectHP);
+  // console.log("my new bot net chance was: ", newBotNetChance)
 }
 
 //This calculates the damage done to the object determined by current clickDamage or dps 
@@ -301,10 +307,10 @@ function render() {
   sizeWalletContainer.textContent = sizeWallet;
 
   //GPU
-  const gpuKey = currentGPU;
+  const gpuKey = currentGPU.value;
   const gpuName = GCardUpgrades[gpuKey].name;
   currentGPUContainer.textContent = gpuName;
-  let buyNewGPU = canUpgradeGPU();
+  let buyNewGPU = canUpgradeItem(currentGPU, GCardUpgrades);
   if (buyNewGPU) {
     upgradeGPUButton.style.opacity = 1;
   }
@@ -318,7 +324,11 @@ render();
 
 /* ------ Event Listeners & SetInterval ------*/
 
-upgradeGPUButton.addEventListener("click", upgradeGPU);
+//Upgrades
+
+upgradeGPUButton.addEventListener("click", function () {
+  upgradeItem(currentGPU, GCardUpgrades);
+});
 
 //Damage 
 
