@@ -112,11 +112,26 @@ const cpuUpgrades = {
   },
   PentiumFour: {
     name: "Pentium 4",
-    price: 50,
+    price: 40,
     damage: 1,
   },
+  Core2Duo: {
+    name: "Core 2 Duo",
+    price: 80,
+    damage: 2,
+  },
+  I5_2400S: {
+    name: "i5 2400S",
+    price: 120,
+    damage: 3,
+  },
+  I7_3770: {
+    name: "i7 3770",
+    price: 180,
+    damage: 5,
+  },
   Test: {
-    name:"Test",
+    name: "Test",
     price: 3000,
     damage: 2,
   },
@@ -129,7 +144,7 @@ const hdUpgrades = {
     damage: 0,
   },
   Test: {
-    name:"Test",
+    name: "Bad Drive",
     price: 100,
     damage: 1,
   },
@@ -141,10 +156,15 @@ const ramUpgrades = {
     price: 0,
     damage: 0,
   },
-  Test: {
-    name:"Test",
-    price: 100,
+  mb256: {
+    name:"256 MB",
+    price: 50,
     damage: 1,
+  },
+  mb512: {
+    name: "512 MB",
+    price: 100,
+    damage: 2,
   },
 }
 
@@ -353,6 +373,7 @@ function setDPSDamage() {
   }
   
   /* --- Console Logging --- */
+  // console.log(botnetEfficiency, "is botnet efficiency")
   // console.log("dps is", dps);
 }
 
@@ -492,7 +513,7 @@ function render() {
   levelContainer.textContent = currentLevel;
   sizeBotnetContainer.textContent = sizeOfBotnet;
   sizeWalletContainer.textContent = parseFloat(sizeWallet).toFixed(2);
-  efficiencyBotnetContainer.textContent = parseFloat(botnetEfficiency).toFixed(0);
+  efficiencyBotnetContainer.textContent = parseFloat(botnetEfficiency*100).toFixed(0);
 
   //Rig
   //CPU
