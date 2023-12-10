@@ -1,38 +1,32 @@
 console.log("Clyker game is werkn sur!");
 
-/* ------ Variables ------*/
-//Damage Variables
+/* ------ Variables ------ */
+//Base const Variables
 const basePlayerClickDamage = 1;
 const basePLayerBotNetSize = 1;
-let clickDamage = 1;
-let dps = 1;
+const basePlayerGang = 0;
+const objectsinLevel = 10 // I do not want this to change - 10 per level 
+const firstLevelHP = 5;
+const startingWallet = 0;
+const objectTypeArray = ["webserver", "crypto", "machine", "phishing"]; //Unused
 
-//Data Variables
-
-let damageDone = 0; // Record Total Damage done [Probably call this hacking attempts to user]
-let numberObjectsHacked = 0;
-
+//Base Game Variables that need to change but need to be initialised
+let hackedinLevel = 0; // Starts at 0 then increases to 9 then resets to zero
 let objectHP = 5; // Set with function in later levels
 let maxObjectHP = 5; //Set with function in later levels
-let currentLevel = 1;
-const objectsinLevel = 10 // I do not want this to change - 10 per level 
-let hackedinLevel = 0; // Starts at 0 then increases to 9 then resets to zero
 
-let objectTypeArray = ["webserver", "crypto", "machine", "phishing"];
+//Game variables that are calculated from base values. 
+let clickDamage, dps;
 
-//Resources - Players Rig - Players Botnet - Players Money
+//Game variables saved & reloaded
+let damageDone, numberObjectsHacked, sizeWallet, currentLevel, sizeOfBotnet;
 
-let sizeOfBotnet = basePLayerBotNetSize; //Your own computer is part of the botnet network 
-let sizeWallet = 26060;
+//Player's rig, gang
 
-//Player rig data
+let currentCPU, currentGPU, currentRAM, currentHD;
+let numAdmins, numScripters, numResearchers, numMules;
 
-let currentGPU = { value: "None" };
-let currentCPU = { value: "PentiumThree"};
-let currentRAM = 0;
-let currentHD = 0;
-
-/* ------ Upgrade Objects ------*/
+/* ------ Upgrade Objects ------ */
 
 //Click Damage upgrades
 //Sorry for underscores for GPUs but looks better to me :)
@@ -125,31 +119,54 @@ const cpuUpgrades = {
 //Gang upgrades -- Will make this a %increase in damage done by your botnet - botnet increases passively
 
 const botnetAdmin = {
-  name: "Botnet Admin",
+  name: "Admins",
   price: 1000,
   efficiency: 10,
 }
 
 const scripter = {
-  name: "Scripter",
-  price: 1000,
+  name: "Scripters",
+  price: 1200,
   damage: 25,
+  efficiency: 2,
 }
 
 const researcher = {
-  name: "Researcher",
+  name: "Researchers",
   price: 600,
-  damage: 15
+  damage: 15,
 }
 
 const mule = {
-  name: "Mule",
+  name: "Mules",
   price: 1000,
   money: 1,
 }
 
+/* ----- Save Game Function ----- */
 
-/* ------ Game Logic ------*/
+function saveGame() {
+  let saveGameObject = {
+    damage : damageDone,
+    hacks: numberObjectsHacked,
+    money: sizeWallet,
+    level: currentLevel,
+    botnet: sizeOfBotnet,
+    rig: {
+      currentGPU,
+      currentCPU,
+      currentRAM,
+      currentHD,
+    },
+    gang: [numAdmins, numScripters, numResearchers, numMules],
+  }
+  const stringifiedSave = JSON.stringify(saveGameObject);
+
+  // localStorage only wants strings, so we give it a stringified object
+  localStorage.setItem("Save", stringifiedSave);
+}
+
+/* ------ Game Logic ------ */
 
 // Function to test Event Listeners when added
 
@@ -164,7 +181,7 @@ function itemName(playerItem, upgradeObject) {
   return itemName;
 }
 
-//This function checks if a current item can be upgraded - passes by reference
+//This function checks if a current rig items can be upgraded - passes by reference
 //Seperated because used by the rendering function
 
 function canUpgradeItem(playerItem, UpgradeObject) {
@@ -187,7 +204,7 @@ function canUpgradeItem(playerItem, UpgradeObject) {
   return canUpgrade;
 }
 
-//This function upgrades player GPU - Includes check that the GPU can be upgraded
+//This function upgrades player Items
 
 function upgradeItem(playerItem, upgradeObject) {
 
@@ -234,8 +251,6 @@ function setClickDamage() {
   clickDamage = basePlayerClickDamage + gpuDamage + cpuDamage;
 
   /* --- Console Logging --- */
-  // console.log(arrayGPU);
-  // console.log("my current GPU is indexed at: ", currentGPUindex);
   // console.log("My gpu damage is: ", gpuDamage);
   // console.log("My cpu damage is: ", cpuDamage);
   // console.log("click damage is: ", clickDamage);
@@ -264,6 +279,7 @@ function getNextObject() {
     setDPSDamage();
   }
   //If website hacked have chance of getting money
+  //Mules increase this amount
   let chanceOfMoney = Math.random();
   if (chanceOfMoney < 0.15) {
     sizeWallet+=(maxObjectHP*3); //May change this amount. 
@@ -276,6 +292,8 @@ function getNextObject() {
     hackedinLevel = 0;
     //Calculate new max HP for website
     maxObjectHP = 2*clickDamage + 4*dps; //May change this later
+    //Save Game after completing Level
+    saveGame();
   }
 
   objectHP = maxObjectHP;
@@ -321,6 +339,7 @@ function damageObject(eventParam) {
 
 /* ----- HTML Data IDS ----- */
 
+const newGameButton = document.getElementById("newGame");
 const dpsCounter = document.getElementById("dpsCounter");
 const clickDamageCounter = document.getElementById("clickDamageCounter");
 const objectHPContainer = document.getElementById("objectHP");
@@ -371,10 +390,75 @@ function render() {
 
 }
 
-// Run it once to make sure - especially since you will need to run it if reloading data from storage
-render();
+/* ----- Begin & Reset Game functions ----- */
 
-/* ------ Event Listeners & SetInterval ------*/
+function beginGame() {
+  const mySavedJSON = localStorage.getItem("Save");
+  if (mySavedJSON) {
+    //If its here set the game variables 
+    const gameSave = JSON.parse(mySavedJSON);
+    //Set up the Game 
+    damageDone = gameSave.damage;
+    numberObjectsHacked = gameSave.hacks;
+    sizeWallet = gameSave.money;
+    currentLevel = gameSave.level;
+    sizeOfBotnet = gameSave.botnet;
+    //Rig
+    currentGPU = gameSave.rig.currentGPU;
+    currentCPU = gameSave.rig.currentCPU;
+    currentRAM = gameSave.rig.currentRAM;
+    currentHD = gameSave.rig.currentHD;
+    //Gang
+    numAdmins = gameSave.gang[0];
+    numScripters = gameSave.gang[1];
+    numResearchers = gameSave.gang[2]; 
+    numMules = gameSave.gang[3];
+
+  }
+  else {
+    damageDone = 0;
+    numberObjectsHacked = 0;
+    sizeWallet = startingWallet;
+    currentLevel = 1;
+    sizeOfBotnet = basePLayerBotNetSize;
+    //Rig
+    currentGPU = { value: "None" };
+    currentCPU = { value: "PentiumThree"};
+    currentRAM = 0;
+    currentHD = 0;
+    //Gang
+    numAdmins = 0;
+    numScripters = 0;
+    numResearchers = 0;
+    numMules = 0;
+  }
+
+  setClickDamage();
+  setDPSDamage();
+  render();
+  /* --- Console Logging --- */
+  // console.log("gamesave rig ", gameSave.rig);
+  // console.log("gpu is ", gameSave.rig.currentGPU);
+  // console.log("Begin Function");
+  // console.log("My current GPU is: ",currentGPU);
+  // console.log(mySavedJSON);
+  // console.log(gameSave);
+}
+
+function resetGame(event) {
+  event.preventDefault();
+  localStorage.removeItem("Save");
+  hackedinLevel = 0; // reset
+  objectHP = 5; 
+  maxObjectHP = 5; 
+  beginGame();
+}
+
+/* ----- Begin Game function that needs to run once ----- */
+
+beginGame();
+
+/* ------ Event Listeners & SetInterval ------ */
 
 //Upgrades
 
@@ -389,3 +473,6 @@ upgradeCPUButton.addEventListener("click", function () {
 
 setInterval(damageObject.bind(null, "dps"), 1000);
 hackingButton.addEventListener("click", damageObject.bind(null, "click"));
+
+//NewGameButton 
+newGameButton.addEventListener("click", resetGame);
