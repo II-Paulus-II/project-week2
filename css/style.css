@@ -41,7 +41,7 @@ main {
   overflow: hidden;
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
-  grid-template-rows: 3fr 2fr 2fr 15fr 2fr;
+  grid-template-rows: 3fr 2fr 2fr 15fr 3fr;
   justify-content: center;
   align-items: center;
   background-image: url(../images/data-center.jpg);
@@ -134,4 +134,15 @@ main {
   background-size: 75%;
   color: black;
   font-size: 2rem;
+}
+
+.someHelp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#littleHelp {
+  text-align: center;
+  width: 85%;
 }
