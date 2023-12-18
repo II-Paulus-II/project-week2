@@ -659,3 +659,10 @@ hackingButton.addEventListener("click", damageObject.bind(null, "click"));
 
 //NewGameButton
 newGameButton.addEventListener("click", resetGame);
+
+// for(let i=0; i< 99_999; i++) {
+//   (function foo() {
+//     damageObject("dps");
+//     requestAnimationFrame(foo);
+//   })();
+// }
