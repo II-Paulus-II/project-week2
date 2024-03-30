@@ -102,7 +102,7 @@ const GCardUpgrades = {
     price: 2500,
     damage: 40,
   },
-}
+};
 
 const cpuUpgrades = {
   PentiumThree: {
@@ -135,7 +135,7 @@ const cpuUpgrades = {
     price: 3000,
     damage: 2,
   },
-}
+};
 
 const hdUpgrades = {
   Small: {
@@ -148,7 +148,7 @@ const hdUpgrades = {
     price: 100,
     damage: 1,
   },
-}
+};
 
 const ramUpgrades = {
   First: {
@@ -166,7 +166,7 @@ const ramUpgrades = {
     price: 100,
     damage: 2,
   },
-}
+};
 
 //Gang upgrades -- Will make effiency affect botnet base damage and gang-member damage is flat
 
@@ -174,26 +174,26 @@ const botnetAdmin = {
   name: "Admins",
   price: 1000,
   efficiency: 10,
-}
+};
 
 const scripter = {
   name: "Scripters",
   price: 1200,
   damage: 25,
   efficiency: 2,
-}
+};
 
 const researcher = {
   name: "Researchers",
   price: 600,
   damage: 15,
-}
+};
 
 const mule = {
   name: "Mules",
   price: 1000,
   money: 5,
-}
+};
 
 /* ----- Save Game Function ----- */
 
@@ -216,7 +216,7 @@ function saveGame() {
 
   // localStorage only wants strings, so we give it a stringified object
   localStorage.setItem("Save", stringifiedSave);
-}
+};
 
 /* ------ Game Logic ------ */
 
@@ -324,13 +324,6 @@ function hireGangMember(gangMember) {
 // Function to Calculate Click Damage
 
 function setClickDamage() {
-  //Get GPU damage
-  //Get Individal GPU Objects as array
-  // very bad way to do it rip life
-  // let arrayGPU = Object.values(GCardUpgrades);
-  // let possibleGPU = Object.keys(GCardUpgrades);
-  // let currentGPUindex = possibleGPU.indexOf(currentGPU);
-  // let damageGPU = arrayGPU[currentGPUindex].damage;
 
   //refactor
   const gpuKey = currentGPU.value;
@@ -341,17 +334,12 @@ function setClickDamage() {
   //Calculate Total Click Damage
 
   clickDamage = basePlayerClickDamage + gpuDamage + cpuDamage;
-
-  /* --- Console Logging --- */
-  // console.log("My gpu damage is: ", gpuDamage);
-  // console.log("My cpu damage is: ", cpuDamage);
-  // console.log("click damage is: ", clickDamage);
-}
+};
 
 // Function to calculate Botnet Efficiency and i love my brackets
 
 function getBotNetEfficiency() {
-  baseEfficiency = 0.2;
+  let baseEfficiency = 0.2;
   return (numAdmins * ((botnetAdmin.efficiency)/100)) + (numScripters*(scripter.efficiency/100)) + baseEfficiency;
 }
 

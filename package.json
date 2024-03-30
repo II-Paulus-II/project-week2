@@ -1,0 +1,26 @@
+{
+  "name": "project-week2",
+  "version": "1.0.0",
+  "description": "Cookie Clicker project.",
+  "main": "index.js",
+  "dependencies": {
+    "esbuild": "^0.19.9",
+    "nanoid": "^3.3.7",
+    "picocolors": "^1.0.0",
+    "postcss": "^8.4.32",
+    "rollup": "^4.9.1",
+    "source-map-js": "^1.0.2"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
