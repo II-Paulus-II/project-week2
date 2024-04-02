@@ -46,7 +46,6 @@ export function canHire(gangMember) {
   return canAfford
 }
 
-
 /* ----- Damage Functions ----- */
 
 // Function to calculate Botnet Efficiency and i love my brackets

@@ -31,7 +31,7 @@ let numMules;
 /* ----- Save Game Function ----- */
 
 function saveGame() {
-  let saveGameObject = {
+  const saveGameObject = {
     damage : damageDone,
     hacks: numberObjectsHacked,
     money: sizeWallet,
@@ -126,7 +126,8 @@ function setClickDamage() {
 //Function to calculate DPS Damage
 
 function setDPSDamage() {
-  const botnetEfficiency = Game.getBotNetEfficiency(numAdmins, numScripters);
+  //Already Declared
+  botnetEfficiency = Game.getBotNetEfficiency(numAdmins, numScripters);
   const damageIncrease = Game.getGangDamage(numResearchers, numScripters);
   if (sizeOfBotnet <= 5) {
     dps = sizeOfBotnet + damageIncrease;
@@ -237,6 +238,20 @@ const hireMuleButton = document.getElementById("hireMule");
 /* ------ RENDER ------*/
 
 //Two functions just to check if items can be upgraded or gang members can be hired. 
+
+function showDetails(event, playerItem, upgradeObject) {
+  const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
+  const itemDetailsName = itemDetails.querySelector("p.deviceName");
+  const itemDetailsDamage = itemDetails.querySelector("p.deviceDamage")
+  itemDetailsName.textContent = Game.itemName(playerItem, upgradeObject);
+  itemDetailsDamage.textContent = `Damage: ${upgradeObject[playerItem.value].damage}`
+  itemDetails.classList.remove("hidden");
+}
+
+function hideDetails(event) {
+  const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
+  itemDetails.classList.add("hidden");
+}
 
 function canRenderUpgrade(playerItem, upgradeObject) {
   let buyNewItem = Game.canUpgradeItem(playerItem, upgradeObject);
@@ -370,6 +385,32 @@ function resetGame(event) {
 beginGame();
 
 /* ------ Event Listeners & SetInterval ------ */
+//Hovering 
+currentCPUContainer.addEventListener("mouseover", function (event) {
+  showDetails(event, currentCPU, Constants.cpuUpgrades);
+});
+currentCPUContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+currentRAMContainer.addEventListener("mouseover", function (event) {
+  showDetails(event, currentRAM, Constants.ramUpgrades);
+});
+currentRAMContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+currentGPUContainer.addEventListener("mouseover", function (event) {
+  showDetails(event, currentGPU, Constants.GCardUpgrades);
+});
+currentGPUContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+currentHDContainer.addEventListener("mouseover", function (event) {
+  showDetails(event, currentHD, Constants.hdUpgrades);
+});
+currentHDContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+
 
 //Upgrades
 upgradeCPUButton.addEventListener("click", function () {
