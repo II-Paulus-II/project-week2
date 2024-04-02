@@ -1,14 +1,10 @@
+/* ----- Imports ----- */
+import * as Constants from "./constants.js";
+import * as Game from "./game.js";
+
 console.log("Clyker game is werkn sur!");
 
 /* ------ Variables ------ */
-//Base const Variables
-const basePlayerClickDamage = 1;
-const basePLayerBotNetSize = 1;
-const basePlayerGang = 0;
-const objectsinLevel = 10 // I do not want this to change - 10 per level 
-const firstLevelHP = 5;
-const startingWallet = 0;
-const objectTypeArray = ["webserver", "crypto", "machine", "phishing"]; //Unused
 
 //Base Game Variables that need to change but need to be initialised
 let hackedinLevel = 0; // Starts at 0 then increases to 9 then resets to zero
@@ -31,169 +27,6 @@ let numAdmins;
 let numScripters;
 let numResearchers;
 let numMules;
-
-/* ------ Upgrade Objects ------ */
-
-//Click Damage upgrades
-//Sorry for underscores for GPUs but looks better to me :)
-const GCardUpgrades = {
-  None: { //Integreated Graphics doesn't count for damage
-    name: "iGPU",
-    price: 0,
-    damage: 0,
-  },
-  GeForceGT_640: {
-    name: "GeForce GT640",
-    price: 100,
-    damage: 1,
-  },
-  GeForceGTX_460: {
-    name: "GeForce GTX460",
-    price: 225,
-    damage: 2,
-  },
-  GeForceGTX_660Ti: {
-    name: "GeForce GTX660Ti",
-    price: 425,
-    damage: 4,
-  },
-  GeForceGTX_960: {
-    name: "GeForce GTX960",
-    price: 700,
-    damage: 6,
-  },
-  GeForceGTX_1650SUPER: {
-    name: "GeForce GTX1650 Super",
-    price: 900,
-    damage: 10,
-  },
-  GeForceGTX_1070Ti: {
-    name: "GeForce GTX1070Ti",
-    price: 1250,
-    damage: 14,
-  },
-  GeForceRTX_2080: {
-    name: "GeForce RTX2080",
-    price: 1380,
-    damage: 18,
-  },
-  GeForceRTX_3070: {
-    name: "GeForce RTX3070",
-    price: 1600,
-    damage: 22,
-  },
-  GeForceRTX_3080: {
-    name: "GeForce RTX3080",
-    price: 1850,
-    damage: 26,
-  },
-  GeForceRTX_3090Ti: {
-    name: "GeForce RTX3090Ti",
-    price: 2100,
-    damage: 30,
-  },
-  GeForceRTX_4080: {
-    name: "GeForce RTX4080",
-    price: 2300,
-    damage: 35,
-  },
-  GeForceRTX_4090: {
-    name: "GeForce RTX4090",
-    price: 2500,
-    damage: 40,
-  },
-};
-
-const cpuUpgrades = {
-  PentiumThree: {
-    name: "Pentium 3",
-    price: 0,
-    damage: 0,
-  },
-  PentiumFour: {
-    name: "Pentium 4",
-    price: 40,
-    damage: 1,
-  },
-  Core2Duo: {
-    name: "Core 2 Duo",
-    price: 80,
-    damage: 2,
-  },
-  I5_2400S: {
-    name: "i5 2400S",
-    price: 120,
-    damage: 3,
-  },
-  I7_3770: {
-    name: "i7 3770",
-    price: 180,
-    damage: 5,
-  },
-  Test: {
-    name: "Test",
-    price: 3000,
-    damage: 2,
-  },
-};
-
-const hdUpgrades = {
-  Small: {
-    name: "Small",
-    price: 0,
-    damage: 0,
-  },
-  Test: {
-    name: "Bad Drive",
-    price: 100,
-    damage: 1,
-  },
-};
-
-const ramUpgrades = {
-  First: {
-    name: "First",
-    price: 0,
-    damage: 0,
-  },
-  mb256: {
-    name:"256 MB",
-    price: 50,
-    damage: 1,
-  },
-  mb512: {
-    name: "512 MB",
-    price: 100,
-    damage: 2,
-  },
-};
-
-//Gang upgrades -- Will make effiency affect botnet base damage and gang-member damage is flat
-
-const botnetAdmin = {
-  name: "Admins",
-  price: 1000,
-  efficiency: 10,
-};
-
-const scripter = {
-  name: "Scripters",
-  price: 1200,
-  damage: 25,
-  efficiency: 2,
-};
-
-const researcher = {
-  name: "Researchers",
-  price: 600,
-  damage: 15,
-};
-
-const mule = {
-  name: "Mules",
-  price: 1000,
-  money: 5,
-};
 
 /* ----- Save Game Function ----- */
 
@@ -228,41 +61,11 @@ function ibeenClicked() {
 
 /* ----- Rig Upgrade Functions ----- */
 
-//Function to quickly get an item name 
-function itemName(playerItem, upgradeObject) {
-  const itemKey = playerItem.value;
-  const itemName = upgradeObject[itemKey].name;
-  return itemName;
-}
-
-//This function checks if a current rig items can be upgraded - passes by reference
-//Seperated because used by the rendering function
-
-function canUpgradeItem(playerItem, UpgradeObject) {
-
-  const possibleItem = Object.keys(UpgradeObject);
-  const numAvailItems = possibleItem.length;
-  let canUpgrade = false;
-
-  //First Check if current object is not the last member of the list?
-  const currentItemIndex = possibleItem.indexOf(playerItem.value);
-  
-  if (currentItemIndex < numAvailItems-1) {
-    const nextItemPrice = UpgradeObject[possibleItem[currentItemIndex+1]].price;
-    //Second check inside first to prevent checking price for non existent next item. 
-    if ( nextItemPrice <= sizeWallet ) {
-      canUpgrade = true;
-    }
-  }
-
-  return canUpgrade;
-}
-
 //This function upgrades player Items
 
 function upgradeItem(playerItem, upgradeObject) {
 
-  let canUpgradeItemCheck = canUpgradeItem(playerItem, upgradeObject);
+  let canUpgradeItemCheck = Game.canUpgradeItem(playerItem, upgradeObject);
   //Get Array of object Names and number of Objects's available
   const possibleItem = Object.keys(upgradeObject);
   const currentItemIndex = possibleItem.indexOf(playerItem.value);
@@ -276,30 +79,14 @@ function upgradeItem(playerItem, upgradeObject) {
   setClickDamage();
   render();
 
-  /* --- Console Logging --- */
-//   console.log("number of available GPU: ", numAvailGPU);
-//   console.log("Array of GPUS", possibleGPU);
-//   console.log("current index of GPU", currentGPUIndex);
-//   console.log("current GPU is now: ", currentGPU);
 }
 
 /* ----- Gang Hire Functions ----- */
 
-//Function to check if one can pay the hire fee
-
-function canHire(gangMember) {
-  let canAfford = false;
-  const hirePrice = gangMember.price;
-  if (hirePrice <= sizeWallet) {
-    canAfford = true;
-  }
-  return canAfford
-}
-
 //Function to Hire Gang members -- I am sure this can be optimised slightly better but its fine for now 
 
 function hireGangMember(gangMember) {
-  let canHireGM = canHire(gangMember);
+  let canHireGM = Game.canHire(gangMember);
   if (canHireGM) {
     if(gangMember.name == "Admins") {
       numAdmins++;
@@ -327,32 +114,20 @@ function setClickDamage() {
 
   //refactor
   const gpuKey = currentGPU.value;
-  const gpuDamage = GCardUpgrades[gpuKey].damage;
+  const gpuDamage = Constants.GCardUpgrades[gpuKey].damage;
   const cpuKey = currentCPU.value;
-  const cpuDamage = cpuUpgrades[cpuKey].damage;
+  const cpuDamage = Constants.cpuUpgrades[cpuKey].damage;
 
   //Calculate Total Click Damage
 
-  clickDamage = basePlayerClickDamage + gpuDamage + cpuDamage;
+  clickDamage = Constants.basePlayerClickDamage + gpuDamage + cpuDamage;
 };
 
-// Function to calculate Botnet Efficiency and i love my brackets
-
-function getBotNetEfficiency() {
-  let baseEfficiency = 0.2;
-  return (numAdmins * ((botnetAdmin.efficiency)/100)) + (numScripters*(scripter.efficiency/100)) + baseEfficiency;
-}
-
-function getGangDamage() {
-  let researcherDamage = numResearchers * researcher.damage;
-  let scripterDamage = numScripters * scripter.damage;
-  return researcherDamage + scripterDamage;
-}
 //Function to calculate DPS Damage
 
 function setDPSDamage() {
-  botnetEfficiency = getBotNetEfficiency();
-  let damageIncrease = getGangDamage();
+  const botnetEfficiency = Game.getBotNetEfficiency(numAdmins, numScripters);
+  const damageIncrease = Game.getGangDamage(numResearchers, numScripters);
   if (sizeOfBotnet <= 5) {
     dps = sizeOfBotnet + damageIncrease;
   }
@@ -365,13 +140,12 @@ function setDPSDamage() {
   // console.log("dps is", dps);
 }
 
-
 //This function provides a new object and/or new level when an objects hack is completed. 
 //If make a boss do it here. 
 
 function getNextObject() {
   //If website hacked have chance of adding to botnet
-  let newBotNetChance = Math.random();
+  const newBotNetChance = Math.random();
 
   if (newBotNetChance > 0.85 ) {
     sizeOfBotnet++;
@@ -381,10 +155,10 @@ function getNextObject() {
   //Mules increase this amount
   let chanceOfMoney = Math.random();
   if (chanceOfMoney < 0.15) {
-    sizeWallet+=(maxObjectHP*(3+(numMules*mule.money))); //May change this amount. 
+    sizeWallet+=(maxObjectHP*(3+(numMules*Constants.mule.money))); //May change this amount. 
   }
   //Check if level complete
-  if (hackedinLevel == objectsinLevel) {
+  if (hackedinLevel == Constants.objectsinLevel) {
     //incremement level
     currentLevel++;
     //reset level counter
@@ -397,10 +171,6 @@ function getNextObject() {
 
   objectHP = maxObjectHP;
 
-  /* --- Console Logging --- */
-  // console.log("Your level is: ", currentLevel);
-  // console.log("Max Object HP: ", maxObjectHP);
-  // console.log("my new bot net chance was: ", newBotNetChance)
 }
 
 //This calculates the damage done to the object determined by current clickDamage or dps 
@@ -430,10 +200,6 @@ function damageObject(eventParam) {
   }
 
   render();
-  /* --- Console Logging --- */
-  // console.log("calculated damage", clickDamage);
-  // console.log("Damage Done is now", damageDone);
-  // console.log("Number of objects Hacked is: ", numberObjectsHacked);
 }
 
 /* ----- HTML Data IDS ----- */
@@ -473,7 +239,7 @@ const hireMuleButton = document.getElementById("hireMule");
 //Two functions just to check if items can be upgraded or gang members can be hired. 
 
 function canRenderUpgrade(playerItem, upgradeObject) {
-  let buyNewItem = canUpgradeItem(playerItem, upgradeObject);
+  let buyNewItem = Game.canUpgradeItem(playerItem, upgradeObject);
   if (buyNewItem) {
     return 1;
   }
@@ -483,7 +249,7 @@ function canRenderUpgrade(playerItem, upgradeObject) {
 }
 
 function canRenderHire(gangMember) {
-  let canHireGM = canHire(gangMember);
+  let canHireGM = Game.canHire(gangMember);
   if (canHireGM) {
     return 1;
   }
@@ -505,37 +271,37 @@ function render() {
 
   //Rig
   //CPU
-  currentCPUContainer.textContent = itemName(currentCPU, cpuUpgrades);
-  upgradeCPUButton.style.opacity = canRenderUpgrade(currentCPU, cpuUpgrades);
+  currentCPUContainer.textContent = Game.itemName(currentCPU, Constants.cpuUpgrades);
+  upgradeCPUButton.style.opacity = canRenderUpgrade(currentCPU, Constants.cpuUpgrades);
 
   //RAM
-  currentRAMContainer.textContent = itemName(currentRAM, ramUpgrades);
-  upgradeRAMButton.style.opacity = canRenderUpgrade(currentRAM, ramUpgrades);
+  currentRAMContainer.textContent = Game.itemName(currentRAM, Constants.ramUpgrades);
+  upgradeRAMButton.style.opacity = canRenderUpgrade(currentRAM, Constants.ramUpgrades);
 
   //GPU
-  currentGPUContainer.textContent = itemName(currentGPU, GCardUpgrades);
-  upgradeGPUButton.style.opacity = canRenderUpgrade(currentGPU, GCardUpgrades);
+  currentGPUContainer.textContent = Game.itemName(currentGPU, Constants.GCardUpgrades);
+  upgradeGPUButton.style.opacity = canRenderUpgrade(currentGPU, Constants.GCardUpgrades);
 
   //HD
-  currentHDContainer.textContent = itemName(currentHD, hdUpgrades);
-  upgradeHDButton.style.opacity = canRenderUpgrade(currentHD, hdUpgrades);
+  currentHDContainer.textContent = Game.itemName(currentHD, Constants.hdUpgrades);
+  upgradeHDButton.style.opacity = canRenderUpgrade(currentHD, Constants.hdUpgrades);
 
   //Gang
   //Admins
   numAdminsContainer.textContent = numAdmins;
-  hireAdminButton.style.opacity = canRenderHire(botnetAdmin);
+  hireAdminButton.style.opacity = canRenderHire(Constants.botnetAdmin);
 
   //Scripters 
   numScriptersContainer.textContent = numScripters;
-  hireScripterButton.style.opacity = canRenderHire(scripter);
+  hireScripterButton.style.opacity = canRenderHire(Constants.scripter);
 
   //Researchers
   numResearchersContainer.textContent = numResearchers;
-  hireResearcherButton.style.opacity = canRenderHire(researcher);
+  hireResearcherButton.style.opacity = canRenderHire(Constants.researcher);
 
   //Mules
   numMulesContainer.textContent = numMules;
-  hireMuleButton.style.opacity = canRenderHire(mule);
+  hireMuleButton.style.opacity = canRenderHire(Constants.mule);
 }
 
 /* ----- Begin & Reset Game functions ----- */
@@ -566,19 +332,19 @@ function beginGame() {
   else {
     damageDone = 0;
     numberObjectsHacked = 0;
-    sizeWallet = startingWallet;
+    sizeWallet = Constants.startingWallet;
     currentLevel = 1;
-    sizeOfBotnet = basePLayerBotNetSize;
+    sizeOfBotnet = Constants.basePLayerBotNetSize;
     //Rig
-    currentCPU.value = Object.keys(cpuUpgrades)[0];
-    currentRAM.value = Object.keys(ramUpgrades)[0];
-    currentGPU.value = Object.keys(GCardUpgrades)[0];
-    currentHD.value = Object.keys(hdUpgrades)[0];
+    currentCPU.value = Object.keys(Constants.cpuUpgrades)[0];
+    currentRAM.value = Object.keys(Constants.ramUpgrades)[0];
+    currentGPU.value = Object.keys(Constants.GCardUpgrades)[0];
+    currentHD.value = Object.keys(Constants.hdUpgrades)[0];
     //Gang
-    numAdmins = 0;
-    numScripters = 0;
-    numResearchers = 0;
-    numMules = 0;
+    numAdmins = Constants.basePlayerGang;
+    numScripters = Constants.basePlayerGang;
+    numResearchers = Constants.basePlayerGang;
+    numMules = Constants.basePlayerGang;
   }
 
   setClickDamage();
@@ -588,13 +354,6 @@ function beginGame() {
     objectHP = maxObjectHP;
   }
   render();
-  /* --- Console Logging --- */
-  // console.log("gamesave rig ", gameSave.rig);
-  // console.log("gpu is ", gameSave.rig.currentGPU);
-  // console.log("Begin Function");
-  // console.log("My current GPU is: ",currentGPU);
-  // console.log(mySavedJSON);
-  // console.log(gameSave);
 }
 
 function resetGame(event) {
@@ -614,30 +373,30 @@ beginGame();
 
 //Upgrades
 upgradeCPUButton.addEventListener("click", function () {
-  upgradeItem(currentCPU, cpuUpgrades);
+  upgradeItem(currentCPU, Constants.cpuUpgrades);
 });
 upgradeRAMButton.addEventListener("click", function () {
-  upgradeItem(currentRAM, ramUpgrades);
+  upgradeItem(currentRAM, Constants.ramUpgrades);
 });
 upgradeGPUButton.addEventListener("click", function () {
-  upgradeItem(currentGPU, GCardUpgrades);
+  upgradeItem(currentGPU, Constants.GCardUpgrades);
 });
 upgradeHDButton.addEventListener("click", function () {
-  upgradeItem(currentHD, hdUpgrades);
+  upgradeItem(currentHD, Constants.hdUpgrades);
 });
 
 //Hire Gang Members
 hireAdminButton.addEventListener("click", function () {
-  hireGangMember(botnetAdmin);
+  hireGangMember(Constants.botnetAdmin);
 });
 hireScripterButton.addEventListener("click", function () {
-  hireGangMember(scripter);
+  hireGangMember(Constants.scripter);
 });
 hireResearcherButton.addEventListener("click", function () {
-  hireGangMember(researcher);
+  hireGangMember(Constants.researcher);
 });
 hireMuleButton.addEventListener("click", function () {
-  hireGangMember(mule);
+  hireGangMember(Constants.mule);
 });
 
 //Damage -- could do this the above way as well. 
