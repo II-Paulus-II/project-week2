@@ -13,7 +13,7 @@ export function itemName(playerItem, upgradeObject) {
 //This function checks if a current rig items can be upgraded - passes by reference
 //Seperated because used by the rendering function
 
-export function canUpgradeItem(playerItem, UpgradeObject) {
+export function canUpgradeItem(playerItem, UpgradeObject, sizeWallet) {
   const possibleItem = Object.keys(UpgradeObject);
   const numAvailItems = possibleItem.length;
   let canUpgrade = false;
@@ -37,7 +37,7 @@ export function canUpgradeItem(playerItem, UpgradeObject) {
 
 //Function to check if one can pay the hire fee
 
-export function canHire(gangMember) {
+export function canHire(gangMember, sizeWallet) {
   let canAfford = false;
   const hirePrice = gangMember.price;
   if (hirePrice <= sizeWallet) {

@@ -65,7 +65,7 @@ function ibeenClicked() {
 
 function upgradeItem(playerItem, upgradeObject) {
 
-  let canUpgradeItemCheck = Game.canUpgradeItem(playerItem, upgradeObject);
+  let canUpgradeItemCheck = Game.canUpgradeItem(playerItem, upgradeObject, sizeWallet);
   //Get Array of object Names and number of Objects's available
   const possibleItem = Object.keys(upgradeObject);
   const currentItemIndex = possibleItem.indexOf(playerItem.value);
@@ -86,7 +86,7 @@ function upgradeItem(playerItem, upgradeObject) {
 //Function to Hire Gang members -- I am sure this can be optimised slightly better but its fine for now 
 
 function hireGangMember(gangMember) {
-  let canHireGM = Game.canHire(gangMember);
+  let canHireGM = Game.canHire(gangMember, sizeWallet);
   if (canHireGM) {
     if(gangMember.name == "Admins") {
       numAdmins++;
@@ -253,8 +253,8 @@ function hideDetails(event) {
   itemDetails.classList.add("hidden");
 }
 
-function canRenderUpgrade(playerItem, upgradeObject) {
-  let buyNewItem = Game.canUpgradeItem(playerItem, upgradeObject);
+function canRenderUpgrade(playerItem, upgradeObject, sizeWallet) {
+  let buyNewItem = Game.canUpgradeItem(playerItem, upgradeObject, sizeWallet);
   if (buyNewItem) {
     return 1;
   }
@@ -263,8 +263,8 @@ function canRenderUpgrade(playerItem, upgradeObject) {
   }
 }
 
-function canRenderHire(gangMember) {
-  let canHireGM = Game.canHire(gangMember);
+function canRenderHire(gangMember, sizeWallet) {
+  let canHireGM = Game.canHire(gangMember, sizeWallet);
   if (canHireGM) {
     return 1;
   }
@@ -287,36 +287,36 @@ function render() {
   //Rig
   //CPU
   currentCPUContainer.textContent = Game.itemName(currentCPU, Constants.cpuUpgrades);
-  upgradeCPUButton.style.opacity = canRenderUpgrade(currentCPU, Constants.cpuUpgrades);
+  upgradeCPUButton.style.opacity = canRenderUpgrade(currentCPU, Constants.cpuUpgrades, sizeWallet);
 
   //RAM
   currentRAMContainer.textContent = Game.itemName(currentRAM, Constants.ramUpgrades);
-  upgradeRAMButton.style.opacity = canRenderUpgrade(currentRAM, Constants.ramUpgrades);
+  upgradeRAMButton.style.opacity = canRenderUpgrade(currentRAM, Constants.ramUpgrades, sizeWallet);
 
   //GPU
   currentGPUContainer.textContent = Game.itemName(currentGPU, Constants.GCardUpgrades);
-  upgradeGPUButton.style.opacity = canRenderUpgrade(currentGPU, Constants.GCardUpgrades);
+  upgradeGPUButton.style.opacity = canRenderUpgrade(currentGPU, Constants.GCardUpgrades, sizeWallet);
 
   //HD
   currentHDContainer.textContent = Game.itemName(currentHD, Constants.hdUpgrades);
-  upgradeHDButton.style.opacity = canRenderUpgrade(currentHD, Constants.hdUpgrades);
+  upgradeHDButton.style.opacity = canRenderUpgrade(currentHD, Constants.hdUpgrades, sizeWallet);
 
   //Gang
   //Admins
   numAdminsContainer.textContent = numAdmins;
-  hireAdminButton.style.opacity = canRenderHire(Constants.botnetAdmin);
+  hireAdminButton.style.opacity = canRenderHire(Constants.botnetAdmin, sizeWallet);
 
   //Scripters 
   numScriptersContainer.textContent = numScripters;
-  hireScripterButton.style.opacity = canRenderHire(Constants.scripter);
+  hireScripterButton.style.opacity = canRenderHire(Constants.scripter, sizeWallet);
 
   //Researchers
   numResearchersContainer.textContent = numResearchers;
-  hireResearcherButton.style.opacity = canRenderHire(Constants.researcher);
+  hireResearcherButton.style.opacity = canRenderHire(Constants.researcher, sizeWallet);
 
   //Mules
   numMulesContainer.textContent = numMules;
-  hireMuleButton.style.opacity = canRenderHire(Constants.mule);
+  hireMuleButton.style.opacity = canRenderHire(Constants.mule, sizeWallet);
 }
 
 /* ----- Begin & Reset Game functions ----- */
@@ -411,6 +411,30 @@ currentHDContainer.addEventListener("mouseout", function (event) {
   hideDetails(event);
 });
 
+// currentCPUContainer.addEventListener("mouseover", function (event) {
+//   showDetails(event, currentCPU, Constants.cpuUpgrades);
+// });
+// currentCPUContainer.addEventListener("mouseout", function (event) {
+//   hideDetails(event);
+// });
+// currentRAMContainer.addEventListener("mouseover", function (event) {
+//   showDetails(event, currentRAM, Constants.ramUpgrades);
+// });
+// currentRAMContainer.addEventListener("mouseout", function (event) {
+//   hideDetails(event);
+// });
+// currentGPUContainer.addEventListener("mouseover", function (event) {
+//   showDetails(event, currentGPU, Constants.GCardUpgrades);
+// });
+// currentGPUContainer.addEventListener("mouseout", function (event) {
+//   hideDetails(event);
+// });
+// currentHDContainer.addEventListener("mouseover", function (event) {
+//   showDetails(event, currentHD, Constants.hdUpgrades);
+// });
+// currentHDContainer.addEventListener("mouseout", function (event) {
+//   hideDetails(event);
+// });
 
 //Upgrades
 upgradeCPUButton.addEventListener("click", function () {
