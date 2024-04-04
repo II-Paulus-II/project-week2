@@ -217,6 +217,7 @@ const currentCPUContainer = document.getElementById("currentCPU");
 const currentRAMContainer = document.getElementById("currentRAM");
 const currentGPUContainer = document.getElementById("currentGPU");
 const currentHDContainer = document.getElementById("currentHD");
+const adminHoverContainer = document.getElementById("adminContainer")
 const numAdminsContainer = document.getElementById("numAdmins");
 const numScriptersContainer = document.getElementById("numScripters");
 const numResearchersContainer = document.getElementById("numResearchers");
