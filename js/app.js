@@ -219,8 +219,11 @@ const currentGPUContainer = document.getElementById("currentGPU");
 const currentHDContainer = document.getElementById("currentHD");
 const adminHoverContainer = document.getElementById("adminContainer")
 const numAdminsContainer = document.getElementById("numAdmins");
+const scripterHoverContainer = document.getElementById("scripterContainer")
 const numScriptersContainer = document.getElementById("numScripters");
+const researcherHoverContainer = document.getElementById("researcherContainer")
 const numResearchersContainer = document.getElementById("numResearchers");
+const muleHoverContainer = document.getElementById("mulesContainer")
 const numMulesContainer = document.getElementById("numMules");
 
 /* ------ User Input Buttons ------*/
@@ -252,6 +255,15 @@ function showDetails(event, playerItem, upgradeObject) {
 function hideDetails(event) {
   const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
   itemDetails.classList.add("hidden");
+}
+
+function showGangDetails(event, gangMember) {
+  const gangDetails = event.target.querySelector("div.hoveredDetails");
+  const gangDetailsName = gangDetails.querySelector("p.deviceName");
+  const gangDetailsDamage = gangDetails.querySelector("p.deviceDamage");
+  const gangDetailsPrice = gangDetails.querySelector("p.devicePrice");
+  gangDetailsName.textContent = gangMember.name;
+  gangDetails.classList.remove("hidden");
 }
 
 function canRenderUpgrade(playerItem, upgradeObject, sizeWallet) {
@@ -412,30 +424,30 @@ currentHDContainer.addEventListener("mouseout", function (event) {
   hideDetails(event);
 });
 
-// currentCPUContainer.addEventListener("mouseover", function (event) {
-//   showDetails(event, currentCPU, Constants.cpuUpgrades);
-// });
-// currentCPUContainer.addEventListener("mouseout", function (event) {
-//   hideDetails(event);
-// });
-// currentRAMContainer.addEventListener("mouseover", function (event) {
-//   showDetails(event, currentRAM, Constants.ramUpgrades);
-// });
-// currentRAMContainer.addEventListener("mouseout", function (event) {
-//   hideDetails(event);
-// });
-// currentGPUContainer.addEventListener("mouseover", function (event) {
-//   showDetails(event, currentGPU, Constants.GCardUpgrades);
-// });
-// currentGPUContainer.addEventListener("mouseout", function (event) {
-//   hideDetails(event);
-// });
-// currentHDContainer.addEventListener("mouseover", function (event) {
-//   showDetails(event, currentHD, Constants.hdUpgrades);
-// });
-// currentHDContainer.addEventListener("mouseout", function (event) {
-//   hideDetails(event);
-// });
+adminHoverContainer.addEventListener("mouseover", function (event) {
+  showGangDetails(event, Constants.botnetAdmin);
+});
+adminHoverContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+scripterHoverContainer.addEventListener("mouseover", function (event) {
+  showGangDetails(event, Constants.scripter);
+});
+scripterHoverContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+researcherHoverContainer.addEventListener("mouseover", function (event) {
+  showGangDetails(event, Constants.researcher);
+});
+researcherHoverContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
+muleHoverContainer.addEventListener("mouseover", function (event) {
+  showGangDetails(event, Constants.mule);
+});
+muleHoverContainer.addEventListener("mouseout", function (event) {
+  hideDetails(event);
+});
 
 //Upgrades
 upgradeCPUButton.addEventListener("click", function () {
