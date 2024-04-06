@@ -254,6 +254,7 @@ function showDetails(event, playerItem, upgradeObject) {
 
 function hideDetails(event) {
   const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
+  console.log(itemDetails.textContent);
   itemDetails.classList.add("hidden");
 }
 
@@ -262,7 +263,9 @@ function showGangDetails(event, gangMember) {
   const gangDetailsName = gangDetails.querySelector("p.deviceName");
   const gangDetailsDamage = gangDetails.querySelector("p.deviceDamage");
   const gangDetailsPrice = gangDetails.querySelector("p.devicePrice");
+
   gangDetailsName.textContent = gangMember.name;
+  gangDetailsPrice.textContent = `Hire Price: £${gangMember.price}`;
   gangDetails.classList.remove("hidden");
 }
 
