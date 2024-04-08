@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacker Clicker</title>
+  <meta name="description" content="Hacker Clicker Game play page idle games">
+  <link rel="stylesheet" href="./css/playstyle.css">
+  <script src="./js/app.js" type="module" defer></script>
+</head>
+<body>
+  <header>
+    <h1>The One True Hacker Clicker Experience</h1>
+    <button id="newGame" class="myHoverButton">New Game</button>
+  </header>
+  <main>
+    <section class="click-area" id="click-area-id">
+      <!-- New grid with three boxes on top for information -->
+      <div class="box topBox">
+        <p>Pts: <span id="hackingAttempts">0</span></p>
+      </div>
+      <div class="box topBox"> 
+        <p>Level: <span id="currentLevel">1</span> </p>
+      </div>
+      <div class="box topBox">
+        <div>&#163;<span id="sizeWallet">0</span></div>
+      </div>
+      <div class="box detailsBox">
+        <div>Botnet Dps: <span id="dpsCounter">1</span></div>
+        <div>Click Damage: <span id="clickDamageCounter">1</span></div>
+      </div>
+      <div class="box"><p id="objectHPTitle">Hack Progress</p></div>
+      <div class="box detailsBox">
+        <div>Size of Botnet: <span id="sizeBotnet">1</span></div>
+        <div>Botnet Efficiency: <span id="efficiencyBotnet">1</span>&percnt;</div>
+      </div>
+      <div class="box"></div>
+      <div class="box"><p id="objectHP">10 / 10</p></div>
+      <div class="box"></div>
+      <div class="box rigBox">
+        <div class="rigandgangTitle">Rig:</div>
+        <div>Current CPU: </div>
+        <div class="needRelative"><span id="currentCPU"></span>
+          <div class="hoveredDetails hidden">
+            <p class="deviceName"></p>
+            <p class="deviceDamage"></p>
+          </div>
+        </div>
+        <button id="upgradeCPU" class="myHoverButton">Upgrade</button>
+        <div>Current RAM: </div>
+        <div class="needRelative"><span id="currentRAM"></span>
+          <div class="hoveredDetails hidden">
+            <p class="deviceName"></p>
+            <p class="deviceDamage"></p>
+          </div>
+        </div>
+        <button id="upgradeRAM" class="myHoverButton">Upgrade</button>
+        <div>Current GPU: </div>
+        <div class="needRelative"><span id="currentGPU"></span>
+          <div class="hoveredDetails hidden">
+            <p class="deviceName"></p>
+            <p class="deviceDamage"></p>
+          </div>
+        </div>
+        <button id="upgradeGPU" class="myHoverButton">Upgrade</button>
+        <div>Current HD: </div>
+        <div class="needRelative"><span id="currentHD"></span>
+          <div class="hoveredDetails hidden">
+            <p class="deviceName"></p>
+            <p class="deviceDamage"></p>
+          </div>
+        </div>
+        <button id="upgradeHD" class="myHoverButton">Upgrade</button>
+      </div>
+      <div class="box">
+        <button id="objectHacker" aria-label="hackButton"></button>
+      </div>
+      <div class="box gangBox">
+        <div class="rigandgangTitle">Gang:</div>
+        <div>
+          <div id="adminContainer" class="needRelative">Admins: <span id="numAdmins"></span>
+            <div class="hoveredDetails hidden">
+              <p class="deviceName"></p>
+              <p class="devicePrice"></p>
+              <p class="deviceDamage"></p>
+            </div>
+          </div>
+        </div>
+        <button id="hireAdmin" class="myHoverButton">Hire</button>
+        <div>
+          <div id="scripterContainer" class="needRelative">Scripters: <span id="numScripters"></span>
+            <div class="hoveredDetails hidden">
+              <p class="deviceName"></p>
+              <p class="devicePrice"></p>
+              <p class="deviceDamage"></p>
+            </div>
+          </div>
+        </div>
+        <button id="hireScripter" class="myHoverButton">Hire</button>
+        <div>
+          <div id="researcherContainer" class="needRelative">Researchers: <span id="numResearchers"></span>
+            <div class="hoveredDetails hidden">
+              <p class="deviceName"></p>
+              <p class="devicePrice"></p>
+              <p class="deviceDamage"></p>
+            </div>
+          </div>
+        </div>
+        <button id="hireResearcher" class="myHoverButton">Hire</button>
+        <div>
+          <div id="mulesContainer" class="needRelative">Money Mules: <span id="numMules"></span>
+            <div class="hoveredDetails hidden">
+              <p class="deviceName"></p>
+              <p class="devicePrice"></p>
+              <p class="deviceDamage"></p>
+            </div>
+          </div>
+        </div>
+        <button id="hireMule" class="myHoverButton">Hire</button>
+      </div>
+      <div class="box"></div>
+      <div class="box someHelp">
+        <div id="littleHelp">Every completed hack there is a chance of gaining another bot for the botnet or gaining some valuable data to sell. Hiring more gang members will make the botnet more effective, and buying computer upgrades will make clicking more effective.</div>
+      </div>
+      <div class="box"></div>
+      <!--  -->
+    </section>
+  </main>
+  <footer>
+    <h2>Clyker Technologies &copy; 1931</h2>
+  </footer>
+</body>
+</html>

@@ -8,17 +8,17 @@ button {
 }
 
 body {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   color: aliceblue;
-  grid-template-rows: 3fr 21fr 1fr;
-  grid-template-columns: 1fr;
   background-color: black;
   width: 100vw;
   height: 100vh;
 }
 
 header, footer {
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -27,9 +27,10 @@ header, footer {
 }
 
 main {
-  display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-template-rows: 1fr;
+  display: flex;
+  flex-direction: row;
+  padding: 0 5rem;
+
 }
 
 .left, .right {

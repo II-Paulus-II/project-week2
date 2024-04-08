@@ -254,19 +254,27 @@ function showDetails(event, playerItem, upgradeObject) {
 
 function hideDetails(event) {
   const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
-  console.log(itemDetails.textContent);
   itemDetails.classList.add("hidden");
 }
 
 function showGangDetails(event, gangMember) {
-  const gangDetails = event.target.querySelector("div.hoveredDetails");
-  const gangDetailsName = gangDetails.querySelector("p.deviceName");
-  const gangDetailsDamage = gangDetails.querySelector("p.deviceDamage");
-  const gangDetailsPrice = gangDetails.querySelector("p.devicePrice");
+  const gangDetails = event.target.querySelector(".hoveredDetails");
+  if(gangDetails) {
+    const gangDetailsName = gangDetails.querySelector(".deviceName");
+    const gangDetailsDamage = gangDetails.querySelector(".deviceDamage");
+    const gangDetailsPrice = gangDetails.querySelector(".devicePrice");
 
-  gangDetailsName.textContent = gangMember.name;
-  gangDetailsPrice.textContent = `Hire Price: £${gangMember.price}`;
-  gangDetails.classList.remove("hidden");
+    gangDetailsName.textContent = gangMember.name;
+    gangDetailsPrice.textContent = `Hire Price: £${gangMember.price}`;
+    gangDetails.classList.remove("hidden");
+  }
+}
+
+function hideGangDetails(event) {
+  const itemDetails = event.target.querySelector(".hoveredDetails");
+  if(itemDetails) {
+    itemDetails.classList.add("hidden");
+  }
 }
 
 function canRenderUpgrade(playerItem, upgradeObject, sizeWallet) {
@@ -431,25 +439,25 @@ adminHoverContainer.addEventListener("mouseover", function (event) {
   showGangDetails(event, Constants.botnetAdmin);
 });
 adminHoverContainer.addEventListener("mouseout", function (event) {
-  hideDetails(event);
+  hideGangDetails(event);
 });
 scripterHoverContainer.addEventListener("mouseover", function (event) {
   showGangDetails(event, Constants.scripter);
 });
 scripterHoverContainer.addEventListener("mouseout", function (event) {
-  hideDetails(event);
+  hideGangDetails(event);
 });
 researcherHoverContainer.addEventListener("mouseover", function (event) {
   showGangDetails(event, Constants.researcher);
 });
 researcherHoverContainer.addEventListener("mouseout", function (event) {
-  hideDetails(event);
+  hideGangDetails(event);
 });
 muleHoverContainer.addEventListener("mouseover", function (event) {
   showGangDetails(event, Constants.mule);
 });
 muleHoverContainer.addEventListener("mouseout", function (event) {
-  hideDetails(event);
+  hideGangDetails(event);
 });
 
 //Upgrades

@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: black;
+}
+
+body {
+  color: white;
+  margin: 4rem;
+  background-image: url(../images/data-center.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px white solid;
+  border-radius: 15px;
+  height: calc(100vh - 8rem);
+}
+
+header, footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 10%;
+}
+
+main {
+  height: 80%;
+}
+
+
+
