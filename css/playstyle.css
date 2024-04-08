@@ -137,12 +137,6 @@ main {
   font-size: 2rem;
 }
 
-.someHelp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .needRelative {
   position: relative;
   overflow: visible;
@@ -168,9 +162,4 @@ main {
 
 .hidden {
   display: none;
-}
-
-#littleHelp {
-  text-align: center;
-  width: 85%;
 }
