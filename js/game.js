@@ -31,8 +31,6 @@ export function canUpgradeItem(playerItem, UpgradeObject, sizeWallet) {
   return canUpgrade;
 }
 
-
-
 /* ----- Gang Hire Functions ----- */
 
 //Function to check if one can pay the hire fee
