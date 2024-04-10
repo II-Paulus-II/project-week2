@@ -21,96 +21,107 @@
   <main>
     <article class="click-area" id="click-area-id">
       <section class="topSection">
-        <div class="box topBox">
-          <p>Pts: <span id="hackingAttempts">0</span></p>
+        <div class="gameTitleContainer">
+          <div class="hackerClickerTitle nowrap">
+            HACKER CLICKER
+          </div>
         </div>
-        <div class="box topBox"> 
-          <p>Level: <span id="currentLevel">1</span> </p>
+        <div class="levelPtsContainer">        
+          <div class="topBox">
+            <p class="nowrap">Pts: <span id="hackingAttempts">0</span></p>
+          </div>
+          <div class="topBox"> 
+            <p class="nowrap">Level: <span id="currentLevel">1</span> </p>
+          </div>
         </div>
       </section>
       <section class="bottomSection">
         <div class="upgradesBox">
-          <div class="rigBox">
+          <div class="upgradeSelectionArea">
             <div class="rigandgangTitle">Rig</div>
-            <div class="needRelative">CPU: <span id="currentCPU"></span>
-              <div class="hoveredDetails hidden">
-                <p class="deviceName"></p>
-                <p class="deviceDamage"></p>
-              </div>
-            </div>
-            <div id="upgradeCPU" class="myHoverButton">Upgrade</div>
-            <div class="needRelative">RAM: <span id="currentRAM"></span>
-              <div class="hoveredDetails hidden">
-                <p class="deviceName"></p>
-                <p class="deviceDamage"></p>
-              </div>
-            </div>
-            <div id="upgradeRAM" class="myHoverButton">Upgrade</div>
-            <div class="needRelative">GPU: <span id="currentGPU"></span>
-              <div class="hoveredDetails hidden">
-                <p class="deviceName"></p>
-                <p class="deviceDamage"></p>
-              </div>
-            </div>
-            <div id="upgradeGPU" class="myHoverButton">Upgrade</div>
-            <div class="needRelative">HD: <span id="currentHD"></span>
-              <div class="hoveredDetails hidden">
-                <p class="deviceName"></p>
-                <p class="deviceDamage"></p>
-              </div>
-            </div>
-            <div id="upgradeHD" class="myHoverButton">Upgrade</div>
-          </div>
-          <div class="box gangBox">
             <div class="rigandgangTitle">Gang</div>
-            <div>
-              <div id="adminContainer" class="needRelative">Admins: <span id="numAdmins"></span>
-                <div class="hoveredDetails hidden">
-                  <p class="deviceName"></p>
-                  <p class="devicePrice"></p>
-                  <p class="deviceDamage"></p>
-                </div>
-              </div>
-            </div>
-            <div id="hireAdmin" class="myHoverButton">Hire</div>
-            <div>
-              <div id="scripterContainer" class="needRelative">Scripters: <span id="numScripters"></span>
-                <div class="hoveredDetails hidden">
-                  <p class="deviceName"></p>
-                  <p class="devicePrice"></p>
-                  <p class="deviceDamage"></p>
-                </div>
-              </div>
-            </div>
-            <div id="hireScripter" class="myHoverButton">Hire</div>
-            <div>
-              <div id="researcherContainer" class="needRelative">Researchers: <span id="numResearchers"></span>
-                <div class="hoveredDetails hidden">
-                  <p class="deviceName"></p>
-                  <p class="devicePrice"></p>
-                  <p class="deviceDamage"></p>
-                </div>
-              </div>
-            </div>
-            <div id="hireResearcher" class="myHoverButton">Hire</div>
-            <div>
-              <div id="mulesContainer" class="needRelative">Money Mules: <span id="numMules"></span>
-                <div class="hoveredDetails hidden">
-                  <p class="deviceName"></p>
-                  <p class="devicePrice"></p>
-                  <p class="deviceDamage"></p>
-                </div>
-              </div>
-            </div>
-            <div id="hireMule" class="myHoverButton">Hire</div>
-          </div>
-          <div class="infoBox">
             <div class="rigandgangTitle">Info</div>
-            <div>&#163;<span id="sizeWallet">0</span></div>
-            <div>Botnet Dps: <span id="dpsCounter">1</span></div>
-            <div>Click Damage: <span id="clickDamageCounter">1</span></div>
-            <div>Size of Botnet: <span id="sizeBotnet">1</span></div>
-            <div>Botnet Efficiency: <span id="efficiencyBotnet">1</span>&percnt;</div>
+          </div>
+          <div class="selectedUpgradesBox">
+            <div class="rigBox">
+              <div class="needRelative">CPU: <span id="currentCPU"></span>
+                <div class="hoveredDetails hidden">
+                  <p class="deviceName"></p>
+                  <p class="deviceDamage"></p>
+                </div>
+              </div>
+              <div id="upgradeCPU" class="myHoverButton">Upgrade</div>
+              <div class="needRelative">RAM: <span id="currentRAM"></span>
+                <div class="hoveredDetails hidden">
+                  <p class="deviceName"></p>
+                  <p class="deviceDamage"></p>
+                </div>
+              </div>
+              <div id="upgradeRAM" class="myHoverButton">Upgrade</div>
+              <div class="needRelative">GPU: <span id="currentGPU"></span>
+                <div class="hoveredDetails hidden">
+                  <p class="deviceName"></p>
+                  <p class="deviceDamage"></p>
+                </div>
+              </div>
+              <div id="upgradeGPU" class="myHoverButton">Upgrade</div>
+              <div class="needRelative">HD: <span id="currentHD"></span>
+                <div class="hoveredDetails hidden">
+                  <p class="deviceName"></p>
+                  <p class="deviceDamage"></p>
+                </div>
+              </div>
+              <div id="upgradeHD" class="myHoverButton">Upgrade</div>
+            </div>
+            <div class="box gangBox">
+              <div>
+                <div id="adminContainer" class="needRelative">Admins: <span id="numAdmins"></span>
+                  <div class="hoveredDetails hidden">
+                    <p class="deviceName"></p>
+                    <p class="devicePrice"></p>
+                    <p class="deviceDamage"></p>
+                  </div>
+                </div>
+              </div>
+              <div id="hireAdmin" class="myHoverButton">Hire</div>
+              <div>
+                <div id="scripterContainer" class="needRelative">Scripters: <span id="numScripters"></span>
+                  <div class="hoveredDetails hidden">
+                    <p class="deviceName"></p>
+                    <p class="devicePrice"></p>
+                    <p class="deviceDamage"></p>
+                  </div>
+                </div>
+              </div>
+              <div id="hireScripter" class="myHoverButton">Hire</div>
+              <div>
+                <div id="researcherContainer" class="needRelative">Researchers: <span id="numResearchers"></span>
+                  <div class="hoveredDetails hidden">
+                    <p class="deviceName"></p>
+                    <p class="devicePrice"></p>
+                    <p class="deviceDamage"></p>
+                  </div>
+                </div>
+              </div>
+              <div id="hireResearcher" class="myHoverButton">Hire</div>
+              <div>
+                <div id="mulesContainer" class="needRelative">Money Mules: <span id="numMules"></span>
+                  <div class="hoveredDetails hidden">
+                    <p class="deviceName"></p>
+                    <p class="devicePrice"></p>
+                    <p class="deviceDamage"></p>
+                  </div>
+                </div>
+              </div>
+              <div id="hireMule" class="myHoverButton">Hire</div>
+            </div>
+            <div class="infoBox">
+              <div>&#163;<span id="sizeWallet">0</span></div>
+              <div>Botnet Dps: <span id="dpsCounter">1</span></div>
+              <div>Click Damage: <span id="clickDamageCounter">1</span></div>
+              <div>Size of Botnet: <span id="sizeBotnet">1</span></div>
+              <div>Botnet Efficiency: <span id="efficiencyBotnet">1</span>&percnt;</div>
+            </div>
           </div>
         </div>
         <div class="gameBox">

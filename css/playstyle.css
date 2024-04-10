@@ -7,6 +7,10 @@ button {
   all: unset;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -45,7 +49,7 @@ header {
 
 .headerText:hover, .headerText:active {
   color: black;
-  background-color: white;
+  background-color: aliceblue;
 }
 
 main {
@@ -57,14 +61,13 @@ main {
 }
 
 .click-area {
-  border: 2px white solid;
+  border: 2px aliceblue solid;
   width: 100%;
   max-width: 100%;
   border-radius: 5%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   background-image: url(../images/data-center.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -73,9 +76,44 @@ main {
 .topSection {
   display: flex;
   flex-direction: row;
-  gap: 10rem;
+  gap: 5%;
+  justify-content: space-between;
   align-items: center;
+  background-color: rgba(0, 10, 10, 0.75);
+  margin: 1rem 3rem;
+  padding: 1rem;
+  border: 2px solid aliceblue;
+  border-radius: 10px;
+}
 
+.levelPtsContainer, .gameTitleContainer {
+  margin: 0.5rem;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.hackerClickerTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  padding: 1rem;
+  background: black;
+  border: 2px solid aliceblue;
+  border-radius: 5px;
+}
+
+.topBox {
+  display: flex;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: black;
+  border: 2px solid aliceblue;
+  border-radius: 5px;
 }
 
 .bottomSection {
@@ -85,17 +123,13 @@ main {
   margin: 2rem 0;
 }
 
-.upgradesBox {
+.upgradeSelectionArea, .selectedUpgradesBox {
   display: flex;
   flex-direction: row;
 }
-
-.topBox {
+.upgradesBox {
   display: flex;
-  font-size: 2.5rem;
-  font-weight: bolder;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
 .gameBox {
