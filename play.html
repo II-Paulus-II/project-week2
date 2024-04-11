@@ -38,12 +38,12 @@
       <section class="bottomSection">
         <div class="upgradesBox">
           <div class="upgradeSelectionArea">
-            <div class="rigandgangTitle">Rig</div>
-            <div class="rigandgangTitle">Gang</div>
-            <div class="rigandgangTitle">Info</div>
+            <div id="showRig" class="rigandgangTitle">Rig</div>
+            <div id="showGang" class="rigandgangTitle">Gang</div>
+            <div id="showInfo" class="rigandgangTitle">Info</div>
           </div>
           <div class="selectedUpgradesBox">
-            <div class="rigBox">
+            <div id="rigDisplay" class="rigBox">
               <div class="needRelative">CPU: <span id="currentCPU"></span>
                 <div class="hoveredDetails hidden">
                   <p class="deviceName"></p>
@@ -73,7 +73,7 @@
               </div>
               <div id="upgradeHD" class="myHoverButton">Upgrade</div>
             </div>
-            <div class="box gangBox">
+            <div id="gangDisplay" class="hidden gangBox">
               <div>
                 <div id="adminContainer" class="needRelative">Admins: <span id="numAdmins"></span>
                   <div class="hoveredDetails hidden">
@@ -115,7 +115,7 @@
               </div>
               <div id="hireMule" class="myHoverButton">Hire</div>
             </div>
-            <div class="infoBox">
+            <div id="infoDisplay" class="hidden infoBox">
               <div>&#163;<span id="sizeWallet">0</span></div>
               <div>Botnet Dps: <span id="dpsCounter">1</span></div>
               <div>Click Damage: <span id="clickDamageCounter">1</span></div>

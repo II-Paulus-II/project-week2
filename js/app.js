@@ -28,6 +28,10 @@ let numScripters;
 let numResearchers;
 let numMules;
 
+//Current Displayed Information Variable 
+let currentDisplayedInformation = "rig";
+
+
 /* ----- Save Game Function ----- */
 
 function saveGame() {
@@ -213,6 +217,13 @@ const levelContainer = document.getElementById("currentLevel");
 const sizeWalletContainer = document.getElementById("sizeWallet");
 const sizeBotnetContainer = document.getElementById("sizeBotnet");
 const efficiencyBotnetContainer = document.getElementById("efficiencyBotnet");
+const showRig = document.getElementById("showRig");
+const rigDisplay = document.getElementById("rigDisplay")
+const showGang = document.getElementById("showGang");
+const gangDisplay = document.getElementById("gangDisplay")
+const showInfo = document.getElementById("showInfo");
+const infoDisplay = document.getElementById("infoDisplay")
+
 const currentCPUContainer = document.getElementById("currentCPU");
 const currentRAMContainer = document.getElementById("currentRAM");
 const currentGPUContainer = document.getElementById("currentGPU");
@@ -242,6 +253,37 @@ const hireMuleButton = document.getElementById("hireMule");
 /* ------ RENDER ------*/
 
 //Two functions just to check if items can be upgraded or gang members can be hired. 
+
+function showInformation(param) {
+  //if (param === currentDisplayedInformation)
+  switch(currentDisplayedInformation)
+  {
+    case "rig":
+      rigDisplay.classList.add("hidden");
+      break;
+    case "gang":
+      gangDisplay.classList.add("hidden");
+      break; 
+    case "info":
+      infoDisplay.classList.add("hidden");
+      break;
+  }
+  switch(param)
+  {
+    case "rig":
+      rigDisplay.classList.remove("hidden");
+      currentDisplayedInformation = "rig";
+      break;
+    case "gang":
+      gangDisplay.classList.remove("hidden");
+      currentDisplayedInformation = "gang";
+      break; 
+    case "info":
+      infoDisplay.classList.remove("hidden");
+      currentDisplayedInformation = "info";
+      break;
+  }
+}
 
 function showDetails(event, playerItem, upgradeObject) {
   const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
@@ -409,6 +451,18 @@ function resetGame(event) {
 beginGame();
 
 /* ------ Event Listeners & SetInterval ------ */
+
+//Information Display
+showRig.addEventListener("click", function () {
+  showInformation("rig");
+});
+showGang.addEventListener("click", function () {
+  showInformation("gang");
+});
+showInfo.addEventListener("click", function () {
+  showInformation("info");
+});
+
 //Hovering 
 currentCPUContainer.addEventListener("mouseover", function (event) {
   showDetails(event, currentCPU, Constants.cpuUpgrades);
