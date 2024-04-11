@@ -9,8 +9,8 @@
   <script src="./js/app.js" type="module" defer></script>
   <link rel="icon" href="./icon.png" type="image/png">
 </head>
-<body>
-  <header>
+<body class="flexCol">
+  <header class="flexRow">
     <div class="topButton">
       <a href="/"><div class="headerText">HOME</div></a>
     </div>
@@ -18,15 +18,15 @@
       <div id="newGame" class="headerText">RESET</div>
     </div>
   </header>
-  <main>
-    <article class="click-area" id="click-area-id">
-      <section class="topSection">
-        <div class="gameTitleContainer">
+  <main class="flexRow">
+    <article class="click-area flexCol" id="click-area-id">
+      <section class="topSection flexRow">
+        <div class="gameTitleContainer flexRow">
           <div class="hackerClickerTitle nowrap">
             HACKER CLICKER
           </div>
         </div>
-        <div class="levelPtsContainer">        
+        <div class="levelPtsContainer flexRow">        
           <div class="topBox">
             <p class="nowrap">Pts: <span id="hackingAttempts">0</span></p>
           </div>
@@ -35,14 +35,14 @@
           </div>
         </div>
       </section>
-      <section class="bottomSection">
-        <div class="upgradesBox">
-          <div class="upgradeSelectionArea">
-            <div id="showRig" class="rigandgangTitle">Rig</div>
-            <div id="showGang" class="rigandgangTitle">Gang</div>
-            <div id="showInfo" class="rigandgangTitle">Info</div>
+      <section class="bottomSection flexRow">
+        <div class="upgradesBox flexCol">
+          <div class="upgradeSelectionArea flexRow">
+            <div id="showRig"><img src="./images/rig.webp" alt="rig"></div>
+            <div id="showGang"><img src="./images/watchful.webp" alt="gang"></div>
+            <div id="showInfo"><img src="./images/money.webp" alt="money"></div>
           </div>
-          <div class="selectedUpgradesBox">
+          <div class="selectedUpgradesBox flexRow">
             <div id="rigDisplay" class="rigBox">
               <div class="needRelative">CPU: <span id="currentCPU"></span>
                 <div class="hoveredDetails hidden">
@@ -124,7 +124,7 @@
             </div>
           </div>
         </div>
-        <div class="gameBox">
+        <div class="gameBox flexCol">
           <div class="objectHitPointsDiv"><p id="objectHP">10 / 10</p></div>
           <div id="objectHacker" aria-label="hackButton"><img class="hackImage" src="./images/hacking.png" alt="haxor"><div class="keyboardDiv"><img class="hackKeyboard" src="./images/keyboard.png" alt="keyboard"></div> </div>
         </div>
