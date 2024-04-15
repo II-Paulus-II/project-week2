@@ -100,5 +100,33 @@ main {
   background-color: white;
 }
 
+@media only screen and (max-width: 950px) {
+  body {
+    margin: 2rem;
+  }
+  .innerHelpArea {
+    padding: 0.5rem 1rem 2rem;
+    gap: 1rem;
+    margin: 1rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    margin: 1rem;
+    height: calc(100vh - 2rem);
+  }
+  .innerHelpArea {
+    padding: 0.5rem 1rem 2rem;
+    gap: 0.5rem;
+    margin: 0.5rem;
+  }
+  .innerHelpArea h2 {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+}
+
+
 
 
