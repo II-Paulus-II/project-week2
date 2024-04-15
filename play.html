@@ -11,10 +11,10 @@
 </head>
 <body class="flexCol">
   <header id="playHeader" class="flexRow">
-    <div class="topButton">
-      <a id="homeLink" href="/"><div class="headerText">HOME</div></a>
+    <div class="topButton borderFive">
+      <a href="/"><div class="headerText">HOME</div></a>
     </div>
-    <div class="topButton">
+    <div class="topButton borderFive">
       <div id="newGame" class="headerText">RESET</div>
     </div>
   </header>
@@ -32,28 +32,28 @@
     <article class="click-area flexCol" id="click-area-id">
       <section class="topSection flexRow">
         <div class="gameTitleContainer flexRow">
-          <div class="hackerClickerTitle nowrap">
+          <div class="hackerClickerTitle nowrap borderFive">
             HACKER CLICKER
           </div>
         </div>
         <div class="levelPtsContainer flexRow">        
-          <div class="topBox">
+          <div class="topBox borderFive">
             <p class="nowrap">Pts: <span id="hackingAttempts">0</span></p>
           </div>
-          <div class="topBox"> 
+          <div class="topBox borderFive"> 
             <p class="nowrap">Level: <span id="currentLevel">1</span> </p>
           </div>
         </div>
       </section>
       <section class="bottomSection flexRow">
-        <div class="upgradesBox flexCol">
+        <div class="upgradesBox flexCol borderFive">
           <div class="upgradeSelectionArea flexRow">
             <div id="showRig"><img src="./images/rig.webp" alt="rig"></div>
             <div id="showGang"><img src="./images/watchful.webp" alt="gang"></div>
             <div id="showInfo"><img src="./images/money.webp" alt="money"></div>
           </div>
           <div class="selectedUpgradesBox flexRow">
-            <div id="rigDisplay" class="rigBox">
+            <div id="rigDisplay" class="rigBox flexCol">
               <div class="needRelative">CPU: <span id="currentCPU"></span>
                 <div class="hoveredDetails hidden">
                   <p class="deviceName"></p>
@@ -83,7 +83,7 @@
               </div>
               <div id="upgradeHD" class="myHoverButton">Upgrade</div>
             </div>
-            <div id="gangDisplay" class="hidden gangBox">
+            <div id="gangDisplay" class="hidden gangBox flexCol">
               <div>
                 <div id="adminContainer" class="needRelative">Admins: <span id="numAdmins"></span>
                   <div class="hoveredDetails hidden">
@@ -134,9 +134,9 @@
             </div>
           </div>
         </div>
-        <div class="gameBox flexCol">
+        <div class="gameBox flexCol borderFive">
           <div class="objectHitPointsDiv"><p id="objectHP">10 / 10</p></div>
-          <div id="objectHacker" aria-label="hackButton"><img class="hackImage" src="./images/hacking.png" alt="haxor"><div class="keyboardDiv"><img class="hackKeyboard" src="./images/keyboard.png" alt="keyboard"></div> </div>
+          <div id="objectHacker" class="borderFive" aria-label="hackButton"><img class="hackImage" src="./images/hacking.png" alt="haxor"><div class="keyboardDiv"><img class="hackKeyboard" src="./images/keyboard.png" alt="keyboard"></div> </div>
         </div>
       </section>
     </article>
