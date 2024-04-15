@@ -21,6 +21,11 @@ button {
   flex-direction: row;
 }
 
+.borderFive {
+  border: 2px solid aliceblue;
+  border-radius: 5px;
+}
+
 body {
   overflow: hidden;
   color: aliceblue;
@@ -34,11 +39,6 @@ header {
   gap: 3rem;
   justify-content: center;
   align-items: center;
-}
-
-.topButton {
-  border: 2px solid aliceblue;
-  border-radius: 5px;
 }
 
 .topButton a, a:visited {
@@ -98,8 +98,6 @@ main {
   font-weight: 800;
   padding: 1rem;
   background: black;
-  border: 2px solid aliceblue;
-  border-radius: 5px;
 }
 
 .topBox {
@@ -110,8 +108,6 @@ main {
   align-items: center;
   padding: 1rem;
   background: black;
-  border: 2px solid aliceblue;
-  border-radius: 5px;
 }
 
 .bottomSection {
@@ -125,8 +121,6 @@ main {
 .upgradesBox {
   margin: 1rem;
   padding: 1rem;
-  border: 2px solid aliceblue;
-  border-radius: 5px;
   background-color: rgba(0, 10, 25, 0.7);
 }
 
@@ -135,8 +129,6 @@ main {
   min-width: 575px;
   margin: 1rem;
   padding: 1rem;
-  border: 2px solid aliceblue;
-  border-radius: 5px;
   background-color: rgba(0, 10, 25, 0.7);
 }
 
@@ -147,9 +139,7 @@ main {
 
 #objectHacker {
   position: relative;
-  border: 2px solid aliceblue;
   margin: 50px 75px 125px;
-  border-radius: 5px;
 }
 
 .keyboardDiv {
@@ -184,19 +174,7 @@ main {
 
 .rigBox, .gangBox {
   font-size: 1.5rem;
-  display: flex;
   gap: 0.5rem;
-  flex-direction: column;
-}
-
-
-.detailsBox {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.3rem;
-  font-weight: bold;
-  justify-content: center;
-  align-items: center;
 }
 
 .myHoverButton:hover {
@@ -204,13 +182,6 @@ main {
   background-color: aliceblue;
   color: black;
   text-shadow: none;
-}
-
-.rigandgangTitle {
-  padding: 0.5rem 3.5rem;
-  background-size: 75%;
-  color: aliceblue;
-  font-size: 2rem;
 }
 
 .needRelative {
