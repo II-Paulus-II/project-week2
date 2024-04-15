@@ -4,6 +4,15 @@ import * as Game from "./game.js";
 
 console.log("Clyker game is werkn sur!");
 
+/* ----- Correct Github Home Link ----- */
+
+const HOME = "https://ii-paulus-ii.github.io/project-week2/";
+const HOMELINK = document.getElementById("homeLink");
+
+if(window.location.href === "https://ii-paulus-ii.github.io/project-week2/play.html") {
+  HOMELINK.src = HOME;
+}
+
 /* ------ Variables ------ */
 
 //Base Game Variables that need to change but need to be initialised
