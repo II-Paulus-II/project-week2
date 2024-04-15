@@ -8,6 +8,8 @@ console.log("Clyker game is werkn sur!");
 
 const HOME = "https://ii-paulus-ii.github.io/project-week2/";
 const HOMELINK = document.getElementById("homeLink");
+console.log(HOMELINK);
+console.log(window.location.href);
 
 if(window.location.href === "https://ii-paulus-ii.github.io/project-week2/play.html") {
   HOMELINK.href = HOME;
