@@ -10,7 +10,7 @@ const HOME = "https://ii-paulus-ii.github.io/project-week2/";
 const HOMELINK = document.getElementById("homeLink");
 
 if(window.location.href === "https://ii-paulus-ii.github.io/project-week2/play.html") {
-  HOMELINK.href = HOME;
+  HOMELINK.href = `${HOME}`;
 }
 
 /* ------ Variables ------ */
