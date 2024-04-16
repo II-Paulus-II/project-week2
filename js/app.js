@@ -269,26 +269,32 @@ function showInformation(param) {
   {
     case "rig":
       rigDisplay.classList.add("hidden");
+      showRig.classList.remove("selectedSection");
       break;
     case "gang":
       gangDisplay.classList.add("hidden");
+      showGang.classList.remove("selectedSection");
       break; 
     case "info":
       infoDisplay.classList.add("hidden");
+      showInfo.classList.remove("selectedSection");
       break;
   }
   switch(param)
   {
     case "rig":
       rigDisplay.classList.remove("hidden");
+      showRig.classList.add("selectedSection");
       currentDisplayedInformation = "rig";
       break;
     case "gang":
       gangDisplay.classList.remove("hidden");
+      showGang.classList.add("selectedSection");
       currentDisplayedInformation = "gang";
       break; 
     case "info":
       infoDisplay.classList.remove("hidden");
+      showInfo.classList.add("selectedSection");
       currentDisplayedInformation = "info";
       break;
   }

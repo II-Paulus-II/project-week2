@@ -124,6 +124,10 @@ main {
   background-color: rgba(0, 10, 25, 0.7);
 }
 
+.selectedSection {
+  background-color: aliceblue;
+}
+
 .gameBox {
   justify-content: space-evenly;
   min-width: 575px;
