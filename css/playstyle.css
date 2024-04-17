@@ -115,9 +115,11 @@ main {
   margin: 2rem 0;
 }
 
-.upgradeSelectionArea, .selectedUpgradesBox {
+.upgradeSelectionArea {
+  justify-content: space-around;
   gap: 1rem;
 }
+
 .upgradesBox {
   gap: 2rem;
   margin: 1rem;
