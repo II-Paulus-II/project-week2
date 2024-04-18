@@ -190,6 +190,10 @@ main {
   padding-left: 3rem;
 }
 
+.textBoxInfoDet {
+  padding-left: 5rem;
+}
+
 .myHoverButton {
   margin: 0 auto 0 4rem;
   padding: 0rem 3rem;
