@@ -200,8 +200,8 @@ function damageObject(eventParam) {
   objectHP -= clickDamage;
   }
   else if (eventParam == "dps") {
-    damageDone += dps;
-    objectHP -= dps;
+    damageDone += (dps/10);
+    objectHP -= (dps/10);
   }
 
   //check if object killed [i mean hacked]
@@ -221,6 +221,7 @@ function damageObject(eventParam) {
 const dpsCounter = document.getElementById("dpsCounter");
 const clickDamageCounter = document.getElementById("clickDamageCounter");
 const objectHPContainer = document.getElementById("objectHP");
+const progressBar = document.getElementById("progressBar");
 const hackingAttempts = document.getElementById("hackingAttempts");
 const levelContainer = document.getElementById("currentLevel");
 const sizeWalletContainer = document.getElementById("sizeWallet");
@@ -354,17 +355,22 @@ function canRenderHire(gangMember, sizeWallet) {
   }
 }
 
+function renderProgress() {
+  let widthPercentage = 100 - (100 * (objectHP/maxObjectHP));
+  progressBar.style.width = widthPercentage + "%";
+}
+
 function render() {
   //Basic data entry in the page
   dpsCounter.textContent = parseFloat(dps).toFixed(0);
   clickDamageCounter.textContent = parseFloat(clickDamage).toFixed(0);
-  objectHPContainer.textContent = `${parseFloat(objectHP).toFixed(0)} / ${parseFloat(maxObjectHP).toFixed(0)}`;
   hackingAttempts.textContent = numberObjectsHacked;
   levelContainer.textContent = currentLevel;
   sizeBotnetContainer.textContent = sizeOfBotnet;
   sizeWalletContainer.textContent = parseFloat(sizeWallet).toFixed(2);
   efficiencyBotnetContainer.textContent = parseFloat(botnetEfficiency*100).toFixed(0);
 
+  renderProgress();
   //Rig
   //CPU
   currentCPUContainer.textContent = Game.itemName(currentCPU, Constants.cpuUpgrades);
@@ -559,7 +565,7 @@ hireMuleButton.addEventListener("click", function () {
 
 //Damage -- could do this the above way as well. 
 
-setInterval(damageObject.bind(null, "dps"), 1000);
+setInterval(damageObject.bind(null, "dps"), 100);
 hackingButton.addEventListener("click", damageObject.bind(null, "click"));
 
 //NewGameButton

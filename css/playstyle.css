@@ -231,6 +231,17 @@ main {
   padding: 0.25rem 0;
 }
 
+#progressBarContainer {
+  width: 100%;
+  background-color: grey;
+}
+
+#progressBar {
+  width: 1%;
+  height: 30px;
+  background-color: green;
+}
+
 .hidden {
   display: none;
 }
