@@ -226,7 +226,7 @@ export const ramUpgrades = {
     damage: 2,
   },
   mb2gb: {
-    name: "Kingston KVR1333D3N9",
+    name: "Kingston KVR1333",
     details: "1333MHz; 2GB",
     price: 90,
     damage: 5,

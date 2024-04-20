@@ -13,6 +13,50 @@ if(window.location.href === "https://ii-paulus-ii.github.io/project-week2/play.h
   HOMELINK.href = `${HOME}`;
 }
 
+/* ----- HTML Data IDS ----- */
+
+const dpsCounter = document.getElementById("dpsCounter");
+const clickDamageCounter = document.getElementById("clickDamageCounter");
+const objectHPContainer = document.getElementById("objectHP");
+const progressBar = document.getElementById("progressBar");
+const hackingAttempts = document.getElementById("hackingAttempts");
+const levelContainer = document.getElementById("currentLevel");
+const sizeWalletContainer = document.getElementById("sizeWallet");
+const sizeBotnetContainer = document.getElementById("sizeBotnet");
+const efficiencyBotnetContainer = document.getElementById("efficiencyBotnet");
+const showRig = document.getElementById("showRig");
+const rigDisplay = document.getElementById("rigDisplay")
+const showGang = document.getElementById("showGang");
+const gangDisplay = document.getElementById("gangDisplay")
+const showInfo = document.getElementById("showInfo");
+const infoDisplay = document.getElementById("infoDisplay")
+
+const currentCPUContainer = document.getElementById("currentCPU");
+const currentRAMContainer = document.getElementById("currentRAM");
+const currentGPUContainer = document.getElementById("currentGPU");
+const currentHDContainer = document.getElementById("currentHD");
+const adminHoverContainer = document.getElementById("adminContainer")
+const numAdminsContainer = document.getElementById("numAdmins");
+const scripterHoverContainer = document.getElementById("scripterContainer")
+const numScriptersContainer = document.getElementById("numScripters");
+const researcherHoverContainer = document.getElementById("researcherContainer")
+const numResearchersContainer = document.getElementById("numResearchers");
+const muleHoverContainer = document.getElementById("mulesContainer")
+const numMulesContainer = document.getElementById("numMules");
+
+/* ------ User Input Buttons ------*/
+
+const newGameButton = document.getElementById("newGame");
+const hackingButton = document.getElementById("objectHacker");
+const upgradeCPUButton = document.getElementById("upgradeCPU");
+const upgradeRAMButton = document.getElementById("upgradeRAM");
+const upgradeGPUButton = document.getElementById("upgradeGPU");
+const upgradeHDButton = document.getElementById("upgradeHD");
+const hireAdminButton = document.getElementById("hireAdmin");
+const hireScripterButton = document.getElementById("hireScripter");
+const hireResearcherButton = document.getElementById("hireResearcher");
+const hireMuleButton = document.getElementById("hireMule");
+
 /* ------ Variables ------ */
 
 //Base Game Variables that need to change but need to be initialised
@@ -206,59 +250,18 @@ function damageObject(eventParam) {
 
   //check if object killed [i mean hacked]
   if (objectHP <= 0) {
+    progressBar.style.width = "100%";
     //Increase objects hacked
     numberObjectsHacked += 1;
     hackedinLevel += 1;
 
     getNextObject();
   }
-
-  render();
+  //Just to make sure that progress bar reaches 100% to the naked eye xD
+  setTimeout(() => {
+    render();
+  }, 50);
 }
-
-/* ----- HTML Data IDS ----- */
-
-const dpsCounter = document.getElementById("dpsCounter");
-const clickDamageCounter = document.getElementById("clickDamageCounter");
-const objectHPContainer = document.getElementById("objectHP");
-const progressBar = document.getElementById("progressBar");
-const hackingAttempts = document.getElementById("hackingAttempts");
-const levelContainer = document.getElementById("currentLevel");
-const sizeWalletContainer = document.getElementById("sizeWallet");
-const sizeBotnetContainer = document.getElementById("sizeBotnet");
-const efficiencyBotnetContainer = document.getElementById("efficiencyBotnet");
-const showRig = document.getElementById("showRig");
-const rigDisplay = document.getElementById("rigDisplay")
-const showGang = document.getElementById("showGang");
-const gangDisplay = document.getElementById("gangDisplay")
-const showInfo = document.getElementById("showInfo");
-const infoDisplay = document.getElementById("infoDisplay")
-
-const currentCPUContainer = document.getElementById("currentCPU");
-const currentRAMContainer = document.getElementById("currentRAM");
-const currentGPUContainer = document.getElementById("currentGPU");
-const currentHDContainer = document.getElementById("currentHD");
-const adminHoverContainer = document.getElementById("adminContainer")
-const numAdminsContainer = document.getElementById("numAdmins");
-const scripterHoverContainer = document.getElementById("scripterContainer")
-const numScriptersContainer = document.getElementById("numScripters");
-const researcherHoverContainer = document.getElementById("researcherContainer")
-const numResearchersContainer = document.getElementById("numResearchers");
-const muleHoverContainer = document.getElementById("mulesContainer")
-const numMulesContainer = document.getElementById("numMules");
-
-/* ------ User Input Buttons ------*/
-
-const newGameButton = document.getElementById("newGame");
-const hackingButton = document.getElementById("objectHacker");
-const upgradeCPUButton = document.getElementById("upgradeCPU");
-const upgradeRAMButton = document.getElementById("upgradeRAM");
-const upgradeGPUButton = document.getElementById("upgradeGPU");
-const upgradeHDButton = document.getElementById("upgradeHD");
-const hireAdminButton = document.getElementById("hireAdmin");
-const hireScripterButton = document.getElementById("hireScripter");
-const hireResearcherButton = document.getElementById("hireResearcher");
-const hireMuleButton = document.getElementById("hireMule");
 
 /* ------ RENDER ------*/
 
@@ -305,8 +308,10 @@ function showDetails(event, playerItem, upgradeObject) {
   const itemDetails = event.target.parentElement.querySelector("div.hoveredDetails");
   const itemDetailsName = itemDetails.querySelector("p.deviceName");
   const itemDetailsDamage = itemDetails.querySelector("p.deviceDamage")
+  const itemDetailsDetails = itemDetails.querySelector("p.deviceDetails");
   itemDetailsName.textContent = Game.itemName(playerItem, upgradeObject);
-  itemDetailsDamage.textContent = `Damage: ${upgradeObject[playerItem.value].damage}`
+  itemDetailsDamage.textContent = `Damage: ${upgradeObject[playerItem.value].damage}`;
+  itemDetailsDetails.textContent = `Model: ${upgradeObject[playerItem.value].details}`;
   itemDetails.classList.remove("hidden");
 }
 
@@ -356,7 +361,7 @@ function canRenderHire(gangMember, sizeWallet) {
 }
 
 function renderProgress() {
-  let widthPercentage = 100 - (100 * (objectHP/maxObjectHP));
+  let widthPercentage = 100 * (objectHP/maxObjectHP);
   progressBar.style.width = widthPercentage + "%";
 }
 
@@ -366,6 +371,7 @@ function render() {
   clickDamageCounter.textContent = parseFloat(clickDamage).toFixed(0);
   hackingAttempts.textContent = numberObjectsHacked;
   levelContainer.textContent = currentLevel;
+  objectHPContainer.textContent = objectHP.toFixed(0);
   sizeBotnetContainer.textContent = sizeOfBotnet;
   sizeWalletContainer.textContent = parseFloat(sizeWallet).toFixed(2);
   efficiencyBotnetContainer.textContent = parseFloat(botnetEfficiency*100).toFixed(0);
